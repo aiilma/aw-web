@@ -1,11 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Compositions\CompositionController;
 use App\Http\Controllers\Suggestion\SuggestionController;
+use App\Http\Controllers\Admin\Management\CompositionsController as AdminCompositionsController;
 
 
 Route::get('/login/steam', [AuthController::class, 'steamLoginUrl']);
@@ -14,9 +14,14 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 
 Route::get('/compositions', [CompositionController::class, 'index']);
-Route::group(['middleware' => ['auth:airlock']], function () {
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user', [AuthController::class, 'getUser']);
+
     Route::post('/suggest', [SuggestionController::class, 'store']);
-    Route::get('/user', function (Request $request) {
-        return response()->json($request->user()->only('id', 'nickname', 'steamid', 'avatar'));
+
+    // admin
+    Route::group(['prefix' => 'admin'], function () {
+        Route::post('/comps/upload', [AdminCompositionsController::class, 'upload']);
     });
 });

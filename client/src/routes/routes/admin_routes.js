@@ -1,6 +1,6 @@
 import {CompUploadForm, Dashboard, ErrorPage} from "../../views/pages/Admin";
 
-const prefix = '/admin'
+const prefix = `/admin`;
 
 export default [
     {

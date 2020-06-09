@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
-use App\Models\User;
 
 class Composition extends Model
 {

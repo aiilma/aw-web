@@ -4,8 +4,8 @@ import Button from "@material-ui/core/Button";
 class LoginButton extends React.Component {
 
     constructor(props) {
-        super(props)
-        const steamLoginUrl = process.env.REACT_APP_STEAM_LOGIN_URL
+        super(props);
+        const steamLoginUrl = process.env.REACT_APP_STEAM_LOGIN_URL;
         this.state = {
             steamLoginUrl
         }
@@ -24,14 +24,9 @@ class LoginButton extends React.Component {
     // }
 
     render() {
-        return (
-            <>
-                {this.state.steamLoginUrl && (
-                    <Button href={this.state.steamLoginUrl} color="inherit">Login</Button>
-                )}
-            </>
+        return this.state.steamLoginUrl && (
+            <Button href={this.state.steamLoginUrl} color="inherit">Login</Button>
         )
-
     }
 }
 

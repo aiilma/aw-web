@@ -1,16 +1,17 @@
-export function checkOnMax(value, limit) {
-    if (value.length > 0 && value.length > limit) return false
+
+function checkOnMax(value, limit) {
+    if (value.length > 0 && value.length > limit) return false;
     return true
 }
 
-
-export function checkOnMin(value, limit) {
-    if (value.length > 0 && value.length < limit) return false
+function checkOnMin(value, limit) {
+    if (value.length > 0 && value.length < limit) return false;
     return true
 }
 
-
-export function checkOnRequired(value) {
-    if (!value) return false
+function checkOnRequired(value) {
+    if (!value) return false;
     return true
 }
+
+export {checkOnMax, checkOnMin, checkOnRequired}

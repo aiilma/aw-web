@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
-use Laravel\Socialite\Two\InvalidStateException;
+use App\Http\Controllers\BaseController;
+use App\Models\Role;
 use App\Models\User;
-use App\Models\SocialAccount;
-//use App\Http\Resources\UserResource;
+use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Exception;
-use App\Http\Controllers\BaseController;
+use Laravel\Socialite\Facades\Socialite;
+
+//use App\Models\SocialAccount;
 
 class AuthController extends BaseController
 {
     /**
      * Redirect the user to the Steam authentication page.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function steamLoginUrl()
     {
@@ -48,12 +48,17 @@ class AuthController extends BaseController
             $user = User::where('steamid', '=', $steamid)->first();
 
             if (!$user) {
+                // создание нового пользователя
                 $user = new User();
                 $user->nickname = $nickname;
                 $user->steamid = $steamid;
                 $user->avatar = $avatar;
                 $user->save();
+
+                $roleId = Role::select('id')->where('name', 'user')->first();
+                $user->roles()->attach($roleId);
             } else {
+                // update timestamp
                 $user->touch();
             }
 
@@ -62,7 +67,11 @@ class AuthController extends BaseController
 
             DB::commit();
 
-            return response()->json(auth()->user(), 200);
+            $user = $user->only(['id', 'nickname', 'steamid', 'avatar', 'roles']);
+            $user['roles'] = $user['roles']->map(function ($role) {
+                return $role->name;
+            });
+            return response()->json($user, 200);
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -70,6 +79,15 @@ class AuthController extends BaseController
 
             return response()->json(['message' => 'Timeout of steam auth'], 408);
         }
+    }
+
+    public function getUser(Request $request)
+    {
+        $user = $request->user()->only(['id', 'nickname', 'steamid', 'avatar', 'roles']);
+        $user['roles'] = $user['roles']->map(function ($role) {
+            return $role->name;
+        });
+        return response()->json($user);
     }
 
     public function logout()

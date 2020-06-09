@@ -2,48 +2,34 @@ import {withFormik} from "formik";
 import CompUploadForm from "./Form";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
+import {vldSchema} from "./validationSchema";
 
 const EnhancedForm = withFormik({
-    mapPropsToValues: (props) => {
+    mapPropsToValues: () => {
         return {
             typeVariant: [],
             title: '',
             price: '',
             uploads: {
-                image: [],
-                sourceProject: [],
+                image: null,
+                sourceProject: null,
             },
-            ph: {
-                username: {
-                    minimum: 5,
-                    maximum: 100,
-                    required: true,
-                },
-                twitch: {
-                    minimum: 0,
-                    maximum: 100,
-                    required: false,
-                },
-            }
+            ph: [],
         }
     },
 
-    // Custom sync validation
-    validate: (values, {...props}) => {
-        const errors = {};
-        return errors;
-    },
+    validationSchema: vldSchema,
 
-    handleSubmit: (values, {setSubmitting, resetForm, ...props}) => {
-        const {makeRequest, enqueueSnackbar} = props.props
+    handleSubmit: (values, {setSubmitting, resetForm,}) => {
+        // const {makeRequest, enqueueSnackbar} = props.props
 
         const data = {
             ...values
         }
-        console.log(data)
+        console.log(data);
 
-        setSubmitting(true)
-        setSubmitting(false)
+        setSubmitting(true);
+        setSubmitting(false);
 
 
         // send...
@@ -69,10 +55,11 @@ const EnhancedForm = withFormik({
         // })
 
     },
-
     enableReinitialize: true,
+    // validateOnBlur: false,
+    // validateOnChange: false,
 
     displayName: 'AdminCompUploadForm',
-})(CompUploadForm)
+})(CompUploadForm);
 
 export default withSnackbar(withRouter(EnhancedForm))

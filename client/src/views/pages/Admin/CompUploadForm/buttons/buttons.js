@@ -6,9 +6,9 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/core/SvgIcon/SvgIcon";
 
 export function FormControlGroup(props) {
-    const [disabled, setDisabled] = React.useState(false)
+    const [disabled, setDisabled] = React.useState(false);
 
-    if (props.isSubmitting) setDisabled(true)
+    if (props.isSubmitting) setDisabled(true);
 
     return (
         <ButtonsGroup>
@@ -20,7 +20,9 @@ export function FormControlGroup(props) {
 }
 
 
-export function AddInputBtn() {
+export function AddInputBtn(props) {
+    const {addPlaceholder, disabled} = props;
+
     return (
         <Box mt={2}>
             <Grid container>
@@ -29,6 +31,8 @@ export function AddInputBtn() {
                         variant="contained"
                         startIcon={<AddIcon/>}
                         fullWidth
+                        onClick={addPlaceholder}
+                        disabled={disabled}
                     >
                         Add Placeholder
                     </Button>

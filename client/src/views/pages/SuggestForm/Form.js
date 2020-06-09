@@ -1,17 +1,16 @@
 import SecondaryLayout from "../../common/layout/user/SecondaryLayout";
 import React from "react";
 import SuggestFormControls from "./Controls/Controls";
-import Grid from "@material-ui/core/Grid";
 import {PagePreloader} from "../../ui/layout";
 import {FormWrapper} from "../../ui/form/form";
 import {ControlWrapper, TypeVariantsCB} from "../../ui/controls/controls";
 import {Placeholder} from "../../ui/inputs/inputs";
-import Box from "@material-ui/core/Box";
+import {FastField} from "formik";
+import Checkbox from "@material-ui/core/Checkbox";
 
 
 const SuggestForm = (props) => {
     const {
-        touched, errors,
         handleSubmit, handleReset, handleBack, isSubmitting
     } = props;
 
@@ -21,21 +20,25 @@ const SuggestForm = (props) => {
             <SecondaryLayout>
                 <FormWrapper caption="Cover letter to designers">
                     <form noValidate onSubmit={handleSubmit}>
-                        <Grid container>
-                            <ControlWrapper>
 
-                                {/*type variant*/}
-                                <TypeVariantsCB
-                                    touched={touched} errors={errors}
-                                />
+                        <ControlWrapper>
+                            {/*/!*type variant*!/*/}
+                            <FastField name={`typeVariant`}>
+                                {({field, form: {errors: errs, touched: tchd, values: vls}}) => <TypeVariantsCB
+                                    error={errs.typeVariant} touched={tchd.typeVariant} value={vls.typeVariant}
+                                    label={`Variant:`} isFetching={false}
+                                    {...field}
+                                >
+                                    <Checkbox value="long" cap={'Long'}/>
+                                    <Checkbox value="short" cap={'Short'}/>
+                                </TypeVariantsCB>}
+                            </FastField>
 
-                                {/*<TextInput*/}
-                                <Box mt={2}>
-                                    <Placeholder name="description" label="Description" multiline/>
-                                </Box>
+                            {/*<TextInput*/}
+                            <FastField component={Placeholder} name="description" label="Description" multiline/>
+                        </ControlWrapper>
 
-                            </ControlWrapper>
-                        </Grid>
+
                         <SuggestFormControls
                             onReset={handleReset}
                             onBack={handleBack}
@@ -46,6 +49,6 @@ const SuggestForm = (props) => {
             </SecondaryLayout>
         </>
     );
-}
+};
 
 export default SuggestForm

@@ -11,7 +11,7 @@ import CompCardContent from "./Content/Content";
 const CompCardPreview = styled(CardMedia)`
     margin: auto;
     padding: 20px 16px 0;
-`
+`;
 
 const CompCardWrapper = styled(Card)`
         height: 100%;
@@ -23,12 +23,12 @@ const CompCardWrapper = styled(Card)`
         &:hover {
             box-shadow: inset 0 2px 5px 5px rgba(0,0,0,.65);
         }
-`
+`;
 
-function CompCard({info, ...props}) {
+function CompCard({info}) {
     const [isDemoMode, setIsDemoMode] = React.useState(false);
-    const {link, title, price} = info
-    const pathToImages = `/storage/images`
+    const {link, title, price} = info;
+    const pathToImages = `/storage/images`;
 
     const [thumbImg, setThumb] = React.useState(`${pathToImages}/comps/${link}/__static.gif`);
     const [demoImg, setDemo] = React.useState(`${pathToImages}/comps/${link}/__dynamic.gif`);
@@ -39,19 +39,14 @@ function CompCard({info, ...props}) {
 
                 <CardActionArea disableRipple>
                     <CompCardPreview
-                        component="img"
-                        height="320"
+                        component="img" height="320"
                         image={isDemoMode ? demoImg : thumbImg} alt={title}
-                        onMouseEnter={() => setIsDemoMode(true)}
-                        onMouseLeave={() => setIsDemoMode(false)}
+                        onMouseEnter={() => setIsDemoMode(true)} onMouseLeave={() => setIsDemoMode(false)}
                         onError={() => isDemoMode ? setDemo(`${pathToImages}/default_comp_thumb.png`) : setThumb(`${pathToImages}/default_comp_thumb.png`)}
                     />
                 </CardActionArea>
 
-                <CompCardContent
-                    title={title}
-                    price={price}
-                />
+                <CompCardContent title={title} price={price}/>
 
                 <CardActions>
                     {/*<IconButton component={Link} to={`/compositions/${link}`} aria-label="order">*/}

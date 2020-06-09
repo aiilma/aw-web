@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\{Composition, Suggestion};
 
 
 class User extends Authenticatable
@@ -22,6 +20,11 @@ class User extends Authenticatable
     ];
 
     /* RELATIONS */
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
+    }
 
     public function compositions()
     {

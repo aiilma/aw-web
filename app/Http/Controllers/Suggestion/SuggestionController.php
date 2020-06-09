@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Suggestion;
 
 use App\Http\Controllers\BaseController;
+use App\Models\{Suggestion};
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
-use App\Models\{Suggestion, User};
-use Opis\JsonSchema\{
-    Validator, ValidationResult, ValidationError, Schema
-};
-use File;
+use Opis\JsonSchema\{Schema, Validator};
 
 class SuggestionController extends BaseController
 {

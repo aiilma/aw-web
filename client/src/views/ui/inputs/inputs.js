@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import {TextField} from "@material-ui/core";
-import {Field, getIn} from "formik";
+import {getIn} from "formik";
+import React from "react";
 import Box from "@material-ui/core/Box";
 import Collapse from "@material-ui/core/Collapse";
 import Alert from "@material-ui/lab/Alert/Alert";
-import React from "react";
-import {ControlWrapper} from "../controls/controls";
 
 export const TextInput = styled(({disableFullWidth = false, className, ...props}) => (
     <TextField
@@ -37,7 +36,7 @@ export const TextInput = styled(({disableFullWidth = false, className, ...props}
 // #4CAF50 green
 // #ef5350 red
 
-export const PlaceholderList = ({inputs, ...props}) => {
+export const PlaceholderList = ({inputs}) => {
     return Object.keys(inputs).map((inputName, id) => (
             <Placeholder
                 key={id}
@@ -46,28 +45,21 @@ export const PlaceholderList = ({inputs, ...props}) => {
             />
         )
     )
-}
+};
 
-export const Placeholder = (props) => {
-    const {name, label = ''} = props
+export const Placeholder = ({
+                                field, form: {errors, touched},
+                                label = '', startAdornment = null, endAdornment = null, ...props
+                            }) => {
 
-    return (
-        <Field name={name} label={label}>
-            {({field, form}) => {
-                const isErrorWhenTouched = getIn(form.errors, field.name) && getIn(form.touched, field.name)
-                const errorMessage = getIn(form.errors, field.name)
+    return (<Box mt={2}>
+        <TextInput
+            InputProps={{startAdornment, endAdornment,}} label={label}
+            {...field} {...props}
+        />
 
-                return (<>
-                    <TextInput
-                        onChange={form.handleChange}
-                        {...field} {...props}
-                    />
-
-                    <Collapse in={isErrorWhenTouched}>
-                        <Alert variant="filled" severity="warning">{errorMessage}</Alert>
-                    </Collapse>
-                </>)
-            }}
-        </Field>
-    );
+        <Collapse in={!!getIn(errors, field.name) && !!getIn(touched, field.name)}>
+            <Alert variant="filled" severity="warning">{getIn(errors, field.name)}</Alert>
+        </Collapse>
+    </Box>)
 };

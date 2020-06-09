@@ -6,12 +6,13 @@ import {makeRequest} from "../../../../store/ducks/admin/comp-upload-form/operat
 
 class CompUploadFormContainer extends Component {
 
+    // вернуться назад
     handleBack() {
         this.props.history.goBack()
     }
 
     render() {
-        const {makeRequest} = this.props
+        const {makeRequest} = this.props;
 
         return (
             <EnhancedForm

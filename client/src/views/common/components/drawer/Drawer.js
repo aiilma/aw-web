@@ -21,15 +21,17 @@ flex-shrink: 0;
 > div {
 width: ${({width}) => width}px;
 }
-`
+`;
 
 
 const Drawer = (props) => {
+    const {links} = props;
+
     return (
         <DrawerWrapper width={240}>
-            <DrawerList linkItems={props.links}/>
+            <DrawerList linkItems={links}/>
         </DrawerWrapper>
     );
-}
+};
 
 export default withRouter(Drawer)

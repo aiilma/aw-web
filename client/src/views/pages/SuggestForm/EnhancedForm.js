@@ -5,7 +5,7 @@ import {withRouter} from "react-router-dom";
 import {checkOnMax, checkOnMin, checkOnRequired} from "../../../store/utils/form_helpers";
 
 const EnhancedForm = withFormik({
-    mapPropsToValues: (props) => {
+    mapPropsToValues: () => {
         return {
             typeVariant: [],
             description: ''
@@ -13,52 +13,52 @@ const EnhancedForm = withFormik({
     },
 
     // Custom sync validation
-    validate: (values, {...props}) => {
+    validate: (values) => {
         const errors = {};
 
         if (Array.isArray(values.typeVariant) && !values.typeVariant.length) {
             errors["typeVariant"] = "Required"
         }
 
-        let minLimit = 10
-        let maxLimit = 3072
+        let minLimit = 10;
+        let maxLimit = 3072;
         if (!checkOnRequired(values.description)) {
             errors["description"] = "Required"
         }
         if (!checkOnMin(values.description, minLimit)) {
-            errors["description"] = `Minimal length is ${minLimit}`
+            errors["description"] = `Minimal length is ${minLimit} chars`
         }
         if (!checkOnMax(values.description, maxLimit)) {
-            errors["description"] = `Maximum length exceeded`
+            errors["description"] = `Maximum length is exceeded`
         }
 
         return errors;
     },
 
     handleSubmit: (values, {setSubmitting, resetForm, ...props}) => {
-        const {makeRequest, enqueueSnackbar} = props.props
+        const {makeRequest, enqueueSnackbar} = props.props;
 
         const data = {
             ...values
-        }
+        };
 
-        setSubmitting(true)
+        setSubmitting(true);
         // send...
-        makeRequest(data).then((res) => {
-            setSubmitting(false)
+        makeRequest(data).then(() => {
+            setSubmitting(false);
 
             resetForm({
                 typeVariant: [],
                 description: ''
-            })
+            });
 
             enqueueSnackbar('OK', {
                 variant: 'success',
                 autoHideDuration: 5000,
             });
         }).catch(err => {
-            setSubmitting(false)
-            const message = [400, 403].includes(err.status) ? err.message : 'Whoops! Something went wrong...'
+            setSubmitting(false);
+            const message = [400, 403].includes(err.status) ? err.message : 'Whoops! Something went wrong...';
 
             enqueueSnackbar(message, {
                 variant: 'error',
@@ -71,6 +71,6 @@ const EnhancedForm = withFormik({
     enableReinitialize: true,
 
     displayName: 'SuggestForm',
-})(SuggestForm)
+})(SuggestForm);
 
 export default withSnackbar(withRouter(EnhancedForm))

@@ -1,8 +1,4 @@
-import {
-    HomeContainer,
-    CompList, SuggestForm,
-    ErrorPage, SteamAuth
-} from "../../views/pages";
+import {CompList, ErrorPage, HomeContainer, SteamAuth, SuggestForm} from "../../views/pages";
 
 export const authRoutes = [
     {

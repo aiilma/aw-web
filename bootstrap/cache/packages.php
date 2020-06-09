@@ -24,13 +24,6 @@
       0 => 'Fruitcake\\Cors\\CorsServiceProvider',
     ),
   ),
-  'laravel/airlock' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Airlock\\AirlockServiceProvider',
-    ),
-  ),
   'laravel/sanctum' => 
   array (
     'providers' => 

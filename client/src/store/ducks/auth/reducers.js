@@ -4,7 +4,8 @@ const user = {
     id: null,
     nickname: null,
     steamid: null,
-    avatar: null
+    avatar: null,
+    roles: null
 };
 
 const initialState = {
@@ -33,7 +34,7 @@ export default function authReducer(state = initialState, {type, payload = null}
                 isLoading: true
             };
         case types.STEAM_LOGOUT_COMPLETED:
-            return authLogout(state, payload);
+            return authLogout(state);
         case types.STEAM_LOGOUT_FAILED:
             return {
                 ...state,
@@ -45,18 +46,16 @@ export default function authReducer(state = initialState, {type, payload = null}
 };
 
 const authLogin = (state, payload) => {
-    const user = payload;
-
     return {
         ...state,
         isLoading: false,
         user: {
-            ...user
+            ...(payload)
         }
     }
 };
 
-const authLogout = (state, payload) => {
+const authLogout = (state) => {
 
     return {
         ...state,
