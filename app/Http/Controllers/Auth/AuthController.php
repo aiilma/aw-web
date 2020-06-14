@@ -33,7 +33,7 @@ class AuthController extends BaseController
     /**
      * Obtain the user information from Steam.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function steamLoginCallback()
     {

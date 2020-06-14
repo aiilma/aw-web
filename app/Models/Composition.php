@@ -10,8 +10,8 @@ class Composition extends Model
 
     protected $fillable = [
         'link', 'title', 'price', 'type_variant_id',
-        'ph', 'images', 'badges', 'src_file',
-        'author_id', 'expires_at'
+        'ph', 'badges', 'author_id',
+        'published_at', 'expires_at',
     ];
 
     protected $dates = [
@@ -19,11 +19,10 @@ class Composition extends Model
     ];
 
     public $timestamps = false;
+
     protected $casts = [
-        'published_at' => 'datetime:Y-m-d H:i:s',
-        'expires_at' => 'datetime:Y-m-d H:i:s',
-        'ph' => 'array',
-        'images' => 'array',
+        'ph' => 'array', 'badges' => 'array',
+        'published_at' => 'datetime:Y-m-d H:i:s', 'expires_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     /* RELATIONS */

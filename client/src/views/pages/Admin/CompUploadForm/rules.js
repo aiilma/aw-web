@@ -17,9 +17,11 @@ export const PROPERTIES = {
         image: ['image/gif'],
         srcProject: ['application/x-compressed', 'application/x-zip-compressed', 'application/zip', 'multipart/x-zip'],
     },
-    FILE_IMAGE_MIN_SIZE: FILE_MB_IN_BYTES,
+    FILE_IMAGE_MIN_SIZE: 0.01 * FILE_MB_IN_BYTES,
+    // FILE_IMAGE_MIN_SIZE: FILE_MB_IN_BYTES,
     FILE_IMAGE_MAX_SIZE: 15 * FILE_MB_IN_BYTES,
-    FILE_SP_MIN_SIZE: FILE_MB_IN_BYTES,
+    FILE_SP_MIN_SIZE: 0.0001 * FILE_MB_IN_BYTES,
+    // FILE_SP_MIN_SIZE: FILE_MB_IN_BYTES,
     FILE_SP_MAX_SIZE: 50 * FILE_MB_IN_BYTES,
 };
 export const NECESSARIES = (() => {
@@ -48,7 +50,7 @@ export const NECESSARIES = (() => {
     };
 
     const vldTypeVariant = () => {
-        return yup.array()
+        return yup.string()
             .required("Required")
             .typeError('Wrong type')
     };

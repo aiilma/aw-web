@@ -8,7 +8,7 @@ export default function uploadCompFormReducer(state = initialState, {type, paylo
             return {
                 ...state,
             }
-        case types.UPLOAD_COMP_SUCCESS:
+        case types.UPLOAD_COMP_COMPLETED:
             return {
                 ...state,
             }

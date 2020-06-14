@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'compSources' => [
+            'driver' => 'local',
+            'root' => storage_path('app/compositions/sources'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

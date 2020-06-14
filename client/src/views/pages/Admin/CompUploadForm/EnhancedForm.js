@@ -3,11 +3,12 @@ import CompUploadForm from "./Form";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {vldSchema} from "./validationSchema";
+import * as yup from "yup";
 
 const EnhancedForm = withFormik({
     mapPropsToValues: () => {
         return {
-            typeVariant: [],
+            typeVariant: undefined,
             title: '',
             price: '',
             uploads: {
@@ -18,46 +19,42 @@ const EnhancedForm = withFormik({
         }
     },
 
-    validationSchema: vldSchema,
+    validationSchema: () => {
+        return yup.lazy(values => {
+            return vldSchema(values)
+        })
+    },
 
-    handleSubmit: (values, {setSubmitting, resetForm,}) => {
-        // const {makeRequest, enqueueSnackbar} = props.props
+
+    handleSubmit: (values, {setSubmitting, resetForm, ...props}) => {
+        const {makeRequest, enqueueSnackbar} = props.props;
 
         const data = {
             ...values
-        }
-        console.log(data);
+        };
 
         setSubmitting(true);
-        setSubmitting(false);
-
-
         // send...
-        // makeRequest(data).then((res) => {
-        //     setSubmitting(false)
-        //
-        //     resetForm({
-        //     //
-        //     })
-        //
-        //     enqueueSnackbar('OK', {
-        //         variant: 'success',
-        //         autoHideDuration: 5000,
-        //     });
-        // }).catch(err => {
-        //     setSubmitting(false)
-        //     const message = [400, 403].includes(err.status) ? err.message : 'Whoops! Something went wrong...'
-        //
-        //     enqueueSnackbar(message, {
-        //         variant: 'error',
-        //         autoHideDuration: 5000,
-        //     });
-        // })
+        makeRequest(data).then(() => {
+            setSubmitting(false);
+            resetForm();
+
+            enqueueSnackbar('OK', {
+                variant: 'success',
+                autoHideDuration: 5000,
+            });
+        }).catch(err => {
+            setSubmitting(false);
+            const message = [400, 403].includes(err.status) ? err.message : 'Whoops! Something went wrong...';
+
+            enqueueSnackbar(message, {
+                variant: 'error',
+                autoHideDuration: 5000,
+            });
+        })
 
     },
     enableReinitialize: true,
-    // validateOnBlur: false,
-    // validateOnChange: false,
 
     displayName: 'AdminCompUploadForm',
 })(CompUploadForm);

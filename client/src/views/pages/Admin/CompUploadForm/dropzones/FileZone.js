@@ -59,7 +59,7 @@ class FileZone extends Component {
                     id={name} name={name}
                     onChange={(e) => {
                         setFieldTouched(name, true);
-                        setFieldValue(name, e.target.files[0])
+                        setFieldValue(name, e.target.files[0]);
                     }}
                 />
                 <Typography variant="body1">{zoneText}</Typography>

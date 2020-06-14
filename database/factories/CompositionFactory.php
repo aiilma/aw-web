@@ -14,7 +14,6 @@ $factory->define(Composition::class, function (Faker $faker) {
         $name = $faker->word;
 
         $ph[$name] = [
-            'label' => "Значение для $name",
             'rules' => [
                 'min' => $faker->boolean(50) ? random_int(0, 5) : 0,
                 'max' => $faker->boolean(50) ? random_int(10, 20) : 50,
@@ -49,7 +48,6 @@ $factory->define(Composition::class, function (Faker $faker) {
         'price' => $faker->randomNumber(2),
         'ph' => json_encode($ph),
         'badges' => json_encode([]),
-        'src_file' => $faker->regexify('[A-Za-z0-9]{64}'),
         'published_at' => $publishedAt,
         'expires_at' => $expiresAt,
     ];

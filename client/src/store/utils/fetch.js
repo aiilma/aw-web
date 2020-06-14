@@ -13,7 +13,7 @@ const fetch = (url, method, body) => {
     // console.log(body)
 
     if (method === "POST") {
-        return axios.post(url, JSON.stringify(body), options)
+        return axios.post(url, body, options)
             .then(res => parseStatus(res.status, res.data), err => parseStatus(err.response.status, err.response.data))
             .catch((err) => Promise.reject(err))
     }
@@ -40,6 +40,7 @@ function requestHeaders() {
     const headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
+        // "Content-Type": "multipart/form-data",
     }
 
     // let token = document.head.querySelector('meta[name="csrf-token"]');
