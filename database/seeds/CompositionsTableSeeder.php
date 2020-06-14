@@ -23,39 +23,12 @@ class CompositionsTableSeeder extends Seeder
             ->each(function ($comp) use ($typeVariantIds, $userIds) {
                 $typeVariant = Arr::random($typeVariantIds);
                 $tvId = $typeVariant->id;
-                $tvSlotsCount = $typeVariant->slots_count;
                 $typeVariantSwither = [$tvId, null];
                 $tvKey = array_rand($typeVariantSwither);
                 $authorId = Arr::random($userIds)->id;
 
-                $images = [
-                    'thumb' => Str::random(32),
-                    'preview' => [
-                        'demo' => Str::random(32),
-                        'full' => [],
-                    ],
-                ];
-
-                if ($typeVariantSwither[$tvKey] !== null) {
-                    // if type specified
-
-                    for ($i = 1; $i <= $tvSlotsCount; $i++) {
-                        $images['preview']['full']["slot_{$i}"] = '';
-                    }
-                } else {
-                    // any
-                    $slotsCount = collect($typeVariantIds)->reduce(function ($carry, $item) {
-                        return $carry + $item->slots_count;
-                    });
-
-                    for ($i = 1; $i <= $slotsCount; $i++) {
-                        $images['preview']['full']["slot_{$i}"] = '';
-                    }
-                }
-
                 $comp->makeVisible('author_id');
                 $comp->type_variant_id = $typeVariantSwither[$tvKey];
-                $comp->images = json_encode($images);
                 $comp->author_id = $authorId;
             })->toArray();
 

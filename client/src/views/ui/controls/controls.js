@@ -23,12 +23,12 @@ export function ControlWrapper({xs = 12, ...props}) {
     </Grid>);
 }
 
-export function TypeVariantsCB(props) {
+export function TypeVariants(props) {
     const {
-        error, touched, value,
+        error, touched,
         name, label, isFetching,
         children,
-        onBlur, onChange,
+        handleChecked, onBlur, onChange,
     } = props;
 
     return (<Box style={{backgroundColor: '#303030'}} p={1}>
@@ -46,8 +46,8 @@ export function TypeVariantsCB(props) {
                         const disabled = !!child.props.disabled;
                         const icon = child.props.value === 'long' ? `/storage/icons/long_icon.svg` : `/storage/icons/short_icon.svg`;
                         const checkedIcon = child.props.value === 'long' ? `/storage/icons/long_icon_active.svg` : `/storage/icons/short_icon_active.svg`;
-                        const checkBox = React.cloneElement(child, {
-                            name, checked: value.includes(child.props.value),
+                        const item = React.cloneElement(child, {
+                            name, checked: handleChecked(child.props.value),
                             color: "default", style: {borderRadius: 0,},
                             icon: <CompIcon src={icon}/>, checkedIcon: <CompIcon src={checkedIcon}/>,
                             onBlur, onChange: (e) => {
@@ -57,7 +57,7 @@ export function TypeVariantsCB(props) {
                         });
 
                         return (<FormControlLabel
-                            control={checkBox} disabled={disabled}
+                            control={item} disabled={disabled}
                             labelPlacement="bottom" label={child.props.cap}
                         />)
                     })}

@@ -3,7 +3,7 @@ import React from "react";
 import SuggestFormControls from "./Controls/Controls";
 import {PagePreloader} from "../../ui/layout";
 import {FormWrapper} from "../../ui/form/form";
-import {ControlWrapper, TypeVariantsCB} from "../../ui/controls/controls";
+import {ControlWrapper, TypeVariants} from "../../ui/controls/controls";
 import {Placeholder} from "../../ui/inputs/inputs";
 import {FastField} from "formik";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -24,14 +24,15 @@ const SuggestForm = (props) => {
                         <ControlWrapper>
                             {/*/!*type variant*!/*/}
                             <FastField name={`typeVariant`}>
-                                {({field, form: {errors: errs, touched: tchd, values: vls}}) => <TypeVariantsCB
-                                    error={errs.typeVariant} touched={tchd.typeVariant} value={vls.typeVariant}
+                                {({field, form: {errors: errs, touched: tchd, values: vls}}) => <TypeVariants
+                                    error={errs.typeVariant} touched={tchd.typeVariant}
                                     label={`Variant:`} isFetching={false}
+                                    handleChecked={(childVal) => (vls.typeVariant).includes(childVal)}
                                     {...field}
                                 >
                                     <Checkbox value="long" cap={'Long'}/>
                                     <Checkbox value="short" cap={'Short'}/>
-                                </TypeVariantsCB>}
+                                </TypeVariants>}
                             </FastField>
 
                             {/*<TextInput*/}

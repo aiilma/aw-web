@@ -1,7 +1,7 @@
 import React from "react";
 import {PagePreloader} from "../../../ui/layout";
 import {FormWrapper} from "../../../ui/form/form";
-import {ControlWrapper, TypeVariantsCB} from "../../../ui/controls/controls";
+import {ControlWrapper, TypeVariants} from "../../../ui/controls/controls";
 import AdminLayout from "../../../common/layout/admin/AdminLayout";
 import {AddInputBtn, FormControlGroup} from "./buttons/buttons";
 import {FastField} from "formik";
@@ -9,15 +9,15 @@ import {Placeholder} from "../../../ui/inputs/inputs";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import {generateKey} from "../../../../store/utils/helpers";
 import {PROPERTIES} from "./rules";
-import Checkbox from "@material-ui/core/Checkbox";
 import FileZone from "./dropzones/FileZone";
 import AddInput from "./additional/AdditionalInput";
 import Dropzones from "./dropzones/uploaders";
+import Radio from "@material-ui/core/Radio";
 
 const CompUploadForm = (props) => {
     const {
-        values,
-        handleSubmit, handleReset, handleBack, isSubmitting, setFieldValue
+        values, isSubmitting,
+        handleSubmit, handleReset, handleBack, setFieldValue
     } = props;
 
     /*ДОБАВОЧНЫЕ ПОЛЯ*/
@@ -66,14 +66,15 @@ const CompUploadForm = (props) => {
                     <ControlWrapper>
                         {/*type variants*/}
                         <FastField name={`typeVariant`}>
-                            {({field, form: {errors: errs, touched: tchd, values: vls}}) => <TypeVariantsCB
-                                error={errs.typeVariant} touched={tchd.typeVariant} value={vls.typeVariant}
+                            {({field, form: {errors: errs, touched: tchd, values: vls}}) => <TypeVariants
+                                error={errs.typeVariant} touched={tchd.typeVariant}
                                 label={`Variant:`} isFetching={false}
+                                handleChecked={(childVal) => vls.typeVariant === childVal}
                                 {...field}
                             >
-                                <Checkbox value="long" cap={'Long'}/>
-                                <Checkbox value="short" cap={'Short'}/>
-                            </TypeVariantsCB>}
+                                <Radio value="long" cap={'Long'}/>
+                                <Radio value="short" cap={'Short'}/>
+                            </TypeVariants>}
                         </FastField>
 
 
