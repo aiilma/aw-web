@@ -3,7 +3,8 @@ import LS from "../utils/LS";
 
 export class UserSrv extends AWSrv {
     async getSteamLink() {
-        return await this.getResource(`/login/steam`)
+        const res = await this.getResource(`/login/steam`)
+        return res.url
     }
 
     async auth(params) {
