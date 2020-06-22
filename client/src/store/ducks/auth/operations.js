@@ -1,58 +1,59 @@
-import {
-    authLogin,
-    authLogout,
-    authLoginCompleted,
-    authLogoutCompleted,
-    authLoginFailed,
-    authLogoutFailed,
-} from "./actions";
-import {fetch} from "../../utils";
-import UserApi from "../../utils/UserApi";
 import history from "../../utils/history";
+import LS from "../../utils/LS";
+import {
+    setUser, setUserCompleted, setUserFailed,
+    steamLogin, steamLoginCompleted, steamLoginFailed,
+    steamLogout, steamLogoutCompleted, steamLogoutFailed
+} from "./actions";
+import {UserSrv} from "../../services/UserSrv";
+
+const userSrv = new UserSrv()
 
 const me = () => dispatch => {
-    dispatch(authLogin());
+    dispatch(setUser());
 
-    return fetch(`/sanctum/csrf-cookie`, "GET")
-        .then(() => {
-            return fetch(`/api/user`, "GET")
-                .then((user) => {
-                    UserApi.authenticate(() => dispatch(authLoginCompleted(user)));
-                    return user
-                })
-                .catch(() => {
-                    dispatch(logout())
-                });
+    return userSrv.me()
+        .then((u) => dispatch(setUserCompleted(u)))
+        .catch((err) => {
+            dispatch(setUserFailed(err))
+            throw err
         })
 };
 
 
 const login = (params) => (dispatch) => {
-    dispatch(authLogin());
+    if (!!params) {
 
-    return fetch(`/sanctum/csrf-cookie`, "GET")
-        .then(() => {
-            return fetch(`/api/login/steam/callback${params}`, "GET")
-                .then((user) => {
-                    UserApi.authenticate(() => dispatch(authLoginCompleted(user)))
-                })
-                .catch(() => {
-                    dispatch(authLoginFailed())
-                });
-        })
+        dispatch(steamLogin());
+
+        return userSrv.auth(params)
+            .then(token => {
+                localStorage.setItem(LS._AUTH_TOK, token);
+
+                dispatch(steamLoginCompleted())
+                dispatch(me())
+
+                history.push(`/compositions`)
+            })
+            .catch(err => {
+                dispatch(steamLoginFailed(err))
+                throw err
+            })
+    }
 };
 
 const logout = () => dispatch => {
-    dispatch(authLogout());
+    dispatch(steamLogout());
 
-    UserApi.logout(() => history.push('/'));
-
-    return fetch(`/api/logout`, "POST")
+    userSrv.logout()
         .then(() => {
-            dispatch(authLogoutCompleted())
+            dispatch(steamLogoutCompleted())
+            localStorage.removeItem(LS._AUTH_TOK)
+            history.push(`/`)
         })
         .catch(err => {
-            dispatch(authLogoutFailed(err))
+            dispatch(steamLogoutFailed(err))
+            throw err
         });
 };
 

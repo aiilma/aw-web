@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 import EnhancedForm from "./EnhancedForm";
-import {makeRequest} from "../../../../store/ducks/admin/comp-upload-form/operations";
-
 
 class CompUploadFormContainer extends Component {
 
@@ -24,4 +21,4 @@ class CompUploadFormContainer extends Component {
 }
 
 
-export default connect(null, {makeRequest})(CompUploadFormContainer)
+export default CompUploadFormContainer

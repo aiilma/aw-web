@@ -2,7 +2,8 @@ import {withFormik} from "formik";
 import SuggestForm from "./Form";
 import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
-import {checkOnMax, checkOnMin, checkOnRequired} from "../../../store/utils/form_helpers";
+import {SuggestSrv} from "../../../store/services/SuggestSrv";
+import {vldSchema} from "./validationSchema";
 
 const EnhancedForm = withFormik({
     mapPropsToValues: () => {
@@ -12,31 +13,10 @@ const EnhancedForm = withFormik({
         }
     },
 
-    // Custom sync validation
-    validate: (values) => {
-        const errors = {};
-
-        if (Array.isArray(values.typeVariant) && !values.typeVariant.length) {
-            errors["typeVariant"] = "Required"
-        }
-
-        let minLimit = 10;
-        let maxLimit = 3072;
-        if (!checkOnRequired(values.description)) {
-            errors["description"] = "Required"
-        }
-        if (!checkOnMin(values.description, minLimit)) {
-            errors["description"] = `Minimal length is ${minLimit} chars`
-        }
-        if (!checkOnMax(values.description, maxLimit)) {
-            errors["description"] = `Maximum length is exceeded`
-        }
-
-        return errors;
-    },
+    validationSchema: vldSchema,
 
     handleSubmit: (values, {setSubmitting, resetForm, ...props}) => {
-        const {makeRequest, enqueueSnackbar} = props.props;
+        const {enqueueSnackbar} = props.props;
 
         const data = {
             ...values
@@ -44,13 +24,9 @@ const EnhancedForm = withFormik({
 
         setSubmitting(true);
         // send...
-        makeRequest(data).then(() => {
+        (new SuggestSrv()).send(data).then(res => {
             setSubmitting(false);
-
-            resetForm({
-                typeVariant: [],
-                description: ''
-            });
+            resetForm();
 
             enqueueSnackbar('OK', {
                 variant: 'success',
@@ -58,7 +34,7 @@ const EnhancedForm = withFormik({
             });
         }).catch(err => {
             setSubmitting(false);
-            const message = [400, 403].includes(err.status) ? err.message : 'Whoops! Something went wrong...';
+            const message = [400, 403].includes(err.status) ? err.data.message : 'Whoops! Something went wrong...';
 
             enqueueSnackbar(message, {
                 variant: 'error',

@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import IconButton from "@material-ui/core/IconButton";
-import {Avatar as MaterialAvatar} from "@material-ui/core";
-import {Menu as MaterialMenu} from "@material-ui/core";
+import {Avatar as MaterialAvatar, Menu as MaterialMenu} from "@material-ui/core";
 import {withRouter} from "react-router-dom";
-import UserApi from '../../../../store/utils/UserApi'
 import LoginButton from "./LoginButton";
 import Skeleton from "@material-ui/lab/Skeleton";
 import styled from 'styled-components'
 import {connect} from "react-redux";
-import {logout} from "../../../../store/ducks/auth/operations";
 import history from "../../../../store/utils/history";
 import MenuItem from "@material-ui/core/MenuItem";
+import {logout} from "../../../../store/ducks/auth/operations";
+import {UserSrv} from "../../../../store/services/UserSrv";
 
 const Avatar = styled((props) => {
     return (
@@ -57,44 +56,43 @@ const Menu = (props) => {
     </MaterialMenu>)
 };
 
-function NavProfile(props) {
+const NavProfile = props => {
     const {
         logout,
         userInfo: {user: {avatar, nickname, roles}, isLoading}
     } = props;
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+    const userSrv = new UserSrv()
 
     const handleMenu = event => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
     };
 
-    const logoutHandler = () => {
-        handleClose();
-        logout()
-    };
 
     const menuItems = [
         // +(заказы, статистика, настройки)
         {
             caption: 'Logout',
-            handler: logoutHandler,
+            handler: () => {
+                handleClose();
+                logout()
+            },
         }
     ];
 
-    if (roles && UserApi.hasRole('admin', roles)) {
-        const goToAdmin = () => {
-            handleClose();
-            history.push('/admin')
-        };
-
-        menuItems.push({
+    // ADMIN
+    if (!!roles && userSrv.hasRole('admin', roles)) {
+        menuItems.unshift({
             caption: 'Admin Panel',
-            handler: goToAdmin,
+            handler: () => {
+                handleClose();
+                history.push('/admin')
+            },
         })
     }
 
@@ -104,56 +102,30 @@ function NavProfile(props) {
         handleClose={handleClose}
     />);
 
-    // on logout
-    if (UserApi.isAuthenticated && isLoading) {
 
-        return (
-            <>
-                <Avatar
-                    nickname={nickname} avatar={avatar} isLoading={true}
-                    handler={handleMenu}
-                />
-                {menu}
-            </>
-        )
+    // authenticated + logout
+    if (userSrv.isAuth()) {
+        return (<>
+            <Avatar
+                nickname={nickname} avatar={avatar} isLoading={isLoading}
+                handler={handleMenu}
+            />
+            {menu}
+        </>)
     }
 
-    // on staying logged in as always
-    if (UserApi.isAuthenticated && !isLoading) {
-
-        return (
-            <>
-                <Avatar
-                    nickname={nickname} avatar={avatar} isLoading={false}
-                    handler={handleMenu}
-                />
-                {menu}
-            </>
-        )
+    // on signing OR guesting
+    if (!userSrv.isAuth()) {
+        return isLoading ? (<>
+            <Avatar
+                isLoading={true}
+                handler={handleMenu}
+            />
+            {menu}
+        </>) : <LoginButton/>
     }
 
-    // when logged in
-    if (!UserApi.isAuthenticated && isLoading) {
-
-        return (
-            <>
-                <Avatar
-                    isLoading={true}
-                    handler={handleMenu}
-                />
-                {menu}
-            </>
-        )
-    }
-
-    // when on guesting
-    if (!UserApi.isAuthenticated && !isLoading) {
-
-        return (
-            <LoginButton/>
-        )
-    }
-}
+};
 
 const mapStateToProps = (store) => ({
     userInfo: store.auth

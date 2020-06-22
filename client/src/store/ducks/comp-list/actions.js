@@ -1,19 +1,17 @@
 import * as types from "./types";
 
-export const fetchList = (path) => {
-    return {
-        type: types.FETCH_LIST,
-        meta: {
-            async: true,
-            blocking: true,
-            path: path,
-            method: "GET",
-        },
-    }
-};
+const fetchList = () => ({
+    type: types.FETCH_LIST,
+})
 
-export const clearList = () => {
-    return {
-        type: types.CLEAR_LIST
-    }
-};
+const fetchListCompleted = (payload) => ({
+    type: types.FETCH_LIST_COMPLETED,
+    payload
+})
+
+const fetchListFailed = (payload) => ({
+    type: types.FETCH_LIST_FAILED,
+    payload
+})
+
+export {fetchList, fetchListCompleted, fetchListFailed}

@@ -1,33 +1,34 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@material-ui/core/Button";
+import LS from "../../../../store/utils/LS";
+import {UserSrv} from "../../../../store/services/UserSrv";
 
-class LoginButton extends React.Component {
+function LoginButton() {
+    const [steamUrl, setSteamUrl] = useState(`#`);
+    const userSrv = new UserSrv()
 
-    constructor(props) {
-        super(props);
-        const steamLoginUrl = process.env.REACT_APP_STEAM_LOGIN_URL;
-        this.state = {
-            steamLoginUrl
+    // получение ссылки аутентификации через steam
+    useEffect(() => {
+        // ссылка имеется в локальном хранилище ?> сохранить её в стейт из локального хранилища
+        if (!!localStorage.getItem(LS._STEAM_LINK)) {
+            setSteamUrl(localStorage.getItem(LS._STEAM_LINK))
+        } else {
+            if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+                let url = process.env.REACT_APP_STEAM_LOGIN_URL
+                setSteamUrl(url)
+                localStorage.setItem(LS._STEAM_LINK, url)
+            } else {
+                userSrv.getSteamLink().then(url => {
+                    setSteamUrl(url)
+                    localStorage.setItem(LS._STEAM_LINK, url)
+                })
+            }
         }
-    }
+    }, [setSteamUrl, userSrv]);
 
-    // componentDidMount() {
-    //     axios.get('/api/login/steam')
-    //         .then((data) => {
-    //             this.setState({
-    //                 steamLoginUrl: data.url
-    //             })
-    //         })
-    //         .catch((error) => this.setState({
-    //             steamLoginUrl: error
-    //         }));
-    // }
-
-    render() {
-        return this.state.steamLoginUrl && (
-            <Button href={this.state.steamLoginUrl} color="inherit">Login</Button>
-        )
-    }
+    return !!steamUrl && (
+        <Button href={steamUrl} color="inherit">Login</Button>
+    )
 }
 
 

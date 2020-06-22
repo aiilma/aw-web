@@ -1,25 +1,23 @@
-import {initCompleted, initFailed, init} from './actions'
+import {init, initCompleted, initFailed} from './actions'
 import {me} from "../auth/operations";
-import UserApi from "../../utils/UserApi"
-import {handleHTTPError} from "../error/operations";
+import {UserSrv} from "../../services/UserSrv";
 
 const initApp = () => (dispatch) => {
-    const promises = []
+    const promises = [];
+    const userSrv = new UserSrv();
 
-    dispatch(init())
+    dispatch(init());
 
-    if (UserApi.isAuthenticated) {
-        const authPromise = dispatch(me())
+    if (!!userSrv.isAuth()) {
+        const authPromise = dispatch(me());
         promises.push(authPromise)
     }
 
     return Promise.all(promises)
-        .then(() => {
-            dispatch(initCompleted())
-        })
+        .then(() => dispatch(initCompleted()))
         .catch(err => {
-            dispatch(initFailed())
-            dispatch(handleHTTPError(err))
+            dispatch(initFailed());
+            throw err
         })
 }
 

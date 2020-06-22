@@ -56,14 +56,12 @@ export const ContentWrapper = styled(Container).attrs({
 `
 
 
-export const Pagination = styled(({className, countPages, ...props}) => {
-    return (
-        <div
-            className={className}
-        >
-            {countPages > 1 ? (<MaterialPagination {...props} />) : null}
+export const Pagination = styled(({className, ...props}) => {
+    return (<>
+        <div className={className}>
+            {props.count > 1 ? (<MaterialPagination {...props} />) : null}
         </div>
-    )
+    </>)
 })
     .attrs({
         renderItem: (item) => (

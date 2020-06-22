@@ -7,6 +7,8 @@ import {ToolbarSpacer} from "../../../ui/layout";
 import PaletteIcon from '@material-ui/icons/Palette';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import Drawer from "../../components/drawer/Drawer";
+import {getCompList} from "../../../../store/ducks/comp-list/operations";
+import {connect} from "react-redux";
 
 const Bg = styled.div`
     display: flex;
@@ -22,14 +24,16 @@ const Main = styled(Container)`
 `
 
 function SecondaryLayout({children, ...props}) {
+    const {getCompList} = props
 
     const links = [{
-        text: 'Compositions',
-        to: '/compositions',
+        text: `Compositions`,
+        to: `/compositions`,
         icon: <PaletteIcon/>,
+        handler: (e) => getCompList(1)
     }, {
-        text: 'Suggest',
-        to: '/suggest',
+        text: `Suggest`,
+        to: `/suggest`,
         icon: <BorderColorIcon/>,
     }]
 
@@ -47,4 +51,4 @@ function SecondaryLayout({children, ...props}) {
     );
 }
 
-export default SecondaryLayout;
+export default connect(null, {getCompList})(SecondaryLayout);

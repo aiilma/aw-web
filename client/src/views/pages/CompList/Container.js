@@ -1,79 +1,45 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {withRouter} from "react-router-dom";
 import CompList from "./CompList";
 import {connect} from "react-redux";
 import SecondaryLayout from "../../common/layout/user/SecondaryLayout";
-import {fetchList, clearList} from "../../../store/ducks/comp-list/operations";
-import queryString from 'query-string'
+import {getCompList} from "../../../store/ducks/comp-list/operations";
 import {ContentWrapper, PageCaption, Pagination, Preloader} from "../../ui/layout";
-import {handleHTTPError, resetHTTPError} from "../../../store/ducks/error/operations";
 import Alert from "@material-ui/lab/Alert";
+import queryString from 'query-string'
 
-
-class CompositionsContainer extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            currentPage: null,
-            total: null,
-            perPage: null,
-            countPages: null,
-        }
-        this.loadCompositions = this.loadCompositions.bind(this)
-    }
+class CompositionsContainer extends React.Component {
 
     componentDidMount() {
-        const {compositions, location} = this.props
+        const {currentPage, total, getCompList, location} = this.props;
 
-        if (compositions.length === 0) {
-            const search = queryString.parse(location.search)
-            if (!(+search.page > 0)) search.page = 1
-            this.loadCompositions(null, search.page)
+        let startPage = 1
 
-            // const uri = queryString.stringifyUrl({url: location.pathname, query: search});
-            // console.log(uri)
+        // если в урле указана стартовая страница
+        const search = queryString.parse(location.search)
+        if (!!search.page) startPage = search.page
+
+        if (total === 0 || currentPage > startPage) {
+            getCompList(startPage).then((res) => res)
         }
     }
-
-    componentWillUnmount() {
-        if (this.props.compositions.length > 0) {
-            this.props.clearList()
-        }
-
-        this.props.resetHTTPError()
-    }
-
-    loadCompositions(e, to) {
-        const {location, fetchList, handleHTTPError} = this.props
-
-        const uri = queryString.stringifyUrl({
-            url: location.pathname, query: {
-                page: to,
-            }
-        });
-
-        return fetchList(uri).then(res => {
-            const {current_page, per_page, total} = res;
-
-            this.setState({
-                ...this.state,
-                currentPage: current_page,
-                perPage: per_page,
-                total: total,
-                countPages: Math.ceil(total / per_page)
-            })
-        }).catch(err => handleHTTPError(err))
-    };
 
     render() {
-        const {countPages, currentPage} = this.state
+        const {
+            currentPage, total, compositions, countPages,
+            isFetching, isError,
+            getCompList
+        } = this.props;
 
-        const pagerNode = <Pagination
-            countPages={countPages}
-            count={countPages}
-            onChange={this.loadCompositions}
-            page={currentPage}
-        />
+        const pagerNode = <Pagination count={countPages} page={currentPage} onChange={(e, to) => getCompList(to)}/>
+
+        const hasData = !(isError || isFetching);
+        const errorMessage = isError ? <Alert severity="error">{`Something has gone wrong`}</Alert> : null;
+        const loader = isFetching ? <Preloader/> : null;
+        const content = !hasData ?
+            null : total > 0 ?
+                <CompList compositions={compositions}/> :
+                <Alert severity="info">List is empty</Alert>;
 
         return (
             <SecondaryLayout>
@@ -81,13 +47,11 @@ class CompositionsContainer extends Component {
 
                 <ContentWrapper>
                     {pagerNode}
-                    {
-                        this.props.error.isError ? <Alert severity="error">{this.props.error.message}</Alert> :
-                            this.props.isFetching ?
-                                <Preloader/> : this.props.compositions.length > 0 ?
-                                <CompList compositions={this.props.compositions}/> :
-                                <Alert severity="info">List is empty</Alert>
-                    }
+
+                    {errorMessage}
+                    {loader}
+                    {content}
+
                     {pagerNode}
                 </ContentWrapper>
             </SecondaryLayout>
@@ -95,10 +59,13 @@ class CompositionsContainer extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    compositions: state.compList.compositions,
-    isFetching: state.compList.isFetching,
-    error: state.error,
+const mapStateToProps = store => ({
+    isFetching: store.compList.isFetching,
+    currentPage: store.compList.currentPage,
+    total: store.compList.total,
+    compositions: store.compList.compositions,
+    countPages: store.compList.countPages,
+    isError: store.compList.isError,
 })
 
-export default connect(mapStateToProps, {fetchList, clearList, handleHTTPError, resetHTTPError})(withRouter(CompositionsContainer))
+export default connect(mapStateToProps, {getCompList})(withRouter(CompositionsContainer))

@@ -1,51 +1,48 @@
 import * as types from "./types";
 
 export const initCompList = {
+    isFetching: true,
+    currentPage: 1,
+    total: 0,
+    perPage: 8,
+    countPages: 0,
     compositions: [],
-    isFetching: false,
-}
+    isError: false
+};
 
-function compListReducer(state = initCompList, {type, payload = null}) {
+export default function compListReducer(state = initCompList, {type, payload = null}) {
     switch (type) {
-        case types.CLEAR_LIST:
-            return {
-                ...state,
-                compositions: [],
-                form: {},
-            }
         case types.FETCH_LIST:
             return {
                 ...state,
-                form: {},
+                isError: false,
                 isFetching: true,
-            }
+            };
         case types.FETCH_LIST_COMPLETED:
-            // console.log(payload.data)
             return {
                 ...state,
+                isError: false,
+                isFetching: false,
+                currentPage: payload.currentPage,
+                total: payload.total,
+                perPage: payload.perPage,
+                countPages: payload.countPages,
                 compositions: [
-                    ...payload.data.map(c => {
-                        return {
-                            link: c.link,
-                            title: c.title,
-                            price: c.price,
-                            author: c.author,
-                        }
-                    })
+                    ...payload.compositions.map(c => ({
+                        link: c.link,
+                        title: c.title,
+                        price: c.price,
+                        author: c.author,
+                    }))
                 ],
-                form: {},
-                isFetching: false,
-            }
+            };
         case types.FETCH_LIST_FAILED:
-
             return {
-                ...state,
+                ...initCompList,
+                isError: true,
                 isFetching: false,
-                compositions: [],
-            }
+            };
         default:
             return state
     }
 }
-
-export default compListReducer

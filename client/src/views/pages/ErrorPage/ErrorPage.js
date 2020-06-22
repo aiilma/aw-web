@@ -10,7 +10,7 @@ export default function ErrorPage({...props}) {
             <Box justifyContent="center" m="auto">
                 <Box>
                     <Typography align="center" variant="h4">
-                        Whoops! Something wrong...
+                        Whoops! Something has gone wrong...
                     </Typography>
                 </Box>
                 <Box>

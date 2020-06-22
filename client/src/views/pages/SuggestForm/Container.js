@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 import EnhancedForm from "./EnhancedForm";
-
-import {makeRequest} from "../../../store/ducks/suggest-form/operations";
-
 
 class SuggestFormContainer extends Component {
 
@@ -23,5 +19,4 @@ class SuggestFormContainer extends Component {
     }
 }
 
-
-export default connect(null, {makeRequest})(SuggestFormContainer)
+export default SuggestFormContainer

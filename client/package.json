@@ -103,7 +103,6 @@
         "notistack": "^0.9.8",
         "query-string": "^6.11.0"
     },
-    "homepage": "http://artworch.com",
     "proxy": "http://artworch.com:8000",
     "jest": {
         "roots": [

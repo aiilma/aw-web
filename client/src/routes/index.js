@@ -1,30 +1,44 @@
 import React from 'react'
-import {
-    Router,
-    Switch
-} from 'react-router-dom'
+import {Router, Switch} from 'react-router-dom'
 import history from "../store/utils/history";
+import {CompList, ErrorPage, HomeContainer, SuggestForm} from "../views/pages";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoutes";
+import AdminRoute from "./AdminRoute";
+import {Dashboard} from "../views/pages/Admin";
+import CompUploadForm from "../views/pages/Admin/CompUploadForm/Container";
 
-import {authRoutes, publicRoutes} from './routes/routes'
-import adminRoutes from './routes/admin_routes'
+const Routes = () => {
+    const adminPrefix = `/admin`;
 
-import {PrivateRoute, PublicRoute, AdminRoute} from './components'
+    return (
+        <Router history={history}>
+            <Switch>
+                {/*ADMIN*/}
+                <AdminRoute exact path={`${adminPrefix}`} component={Dashboard}/>
+                <AdminRoute exact path={`${adminPrefix}/comps/upload`} component={CompUploadForm}/>
 
-const Routes = () => (
-    <Router history={history}>
-        <Switch>
-            {/*ADMIN*/}
-            {adminRoutes.map((route, i) => <AdminRoute key={i} {...route} prefix={'/admin'}/>)}
 
-            {/*AUTHENTICATED*/}
-            {authRoutes.map((route, i) => route.auth ?
-                <PrivateRoute key={i} {...route}/> : <PublicRoute key={i} {...route}/>
-            )}
+                {/*AUTHENTICATED*/}
+                <PrivateRoute exact path="/suggest" component={SuggestForm}/>
 
-            {/*PUBLIC*/}
-            {publicRoutes.map((route, i) => <PublicRoute key={i} {...route}/>)}
-        </Switch>
-    </Router>
-);
+
+                {/*PUBLIC*/}
+                <PublicRoute
+                    exact path="/"
+                    component={HomeContainer} restricted={false}
+                />
+                <PublicRoute
+                    exact path="/compositions"
+                    component={CompList} restricted={false}
+                />
+                <PublicRoute
+                    exact path="*"
+                    component={ErrorPage} restricted={false}
+                />
+            </Switch>
+        </Router>
+    );
+};
 
 export default Routes;

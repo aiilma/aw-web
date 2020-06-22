@@ -4,6 +4,7 @@ import {withSnackbar} from "notistack";
 import {withRouter} from "react-router-dom";
 import {vldSchema} from "./validationSchema";
 import * as yup from "yup";
+import {AdminSrv} from "../../../../store/services/AdminSrv";
 
 const EnhancedForm = withFormik({
     mapPropsToValues: () => {
@@ -27,7 +28,7 @@ const EnhancedForm = withFormik({
 
 
     handleSubmit: (values, {setSubmitting, resetForm, ...props}) => {
-        const {makeRequest, enqueueSnackbar} = props.props;
+        const {enqueueSnackbar} = props.props;
 
         const data = {
             ...values
@@ -35,7 +36,7 @@ const EnhancedForm = withFormik({
 
         setSubmitting(true);
         // send...
-        makeRequest(data).then(() => {
+        (new AdminSrv()).uploadComp(data).then(res => {
             setSubmitting(false);
             resetForm();
 
@@ -45,7 +46,7 @@ const EnhancedForm = withFormik({
             });
         }).catch(err => {
             setSubmitting(false);
-            const message = [400, 403].includes(err.status) ? err.message : 'Whoops! Something went wrong...';
+            const message = [400, 403].includes(err.status) ? err.data.message : 'Whoops! Something went wrong...';
 
             enqueueSnackbar(message, {
                 variant: 'error',

@@ -11,7 +11,7 @@ const user = {
 const initialState = {
     user,
     isLoading: false,
-    error: null
+    isError: null
 };
 
 export default function authReducer(state = initialState, {type, payload = null}) {
@@ -20,46 +20,65 @@ export default function authReducer(state = initialState, {type, payload = null}
             return {
                 ...state,
                 isLoading: true,
+                isError: false,
             };
         case types.STEAM_LOGIN_COMPLETED:
-            return authLogin(state, payload);
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+            };
         case types.STEAM_LOGIN_FAILED:
             return {
                 ...state,
                 isLoading: false,
+                isError: true,
             };
+
+
         case types.STEAM_LOGOUT:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                isError: false,
             };
         case types.STEAM_LOGOUT_COMPLETED:
-            return authLogout(state);
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+            };
         case types.STEAM_LOGOUT_FAILED:
             return {
                 ...state,
-                isLoading: false
+                isLoading: false,
+                isError: true,
+            };
+
+
+        case types.SET_USER:
+            return {
+                ...state,
+                isLoading: true,
+                isError: false,
+            };
+        case types.SET_USER_COMPLETED:
+            return {
+                ...state,
+                isLoading: false,
+                isError: false,
+                user: {
+                    ...(payload)
+                },
+            };
+        case types.SET_USER_FAILED:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                user: user,
             };
         default:
             return state;
-    }
-};
-
-const authLogin = (state, payload) => {
-    return {
-        ...state,
-        isLoading: false,
-        user: {
-            ...(payload)
-        }
-    }
-};
-
-const authLogout = (state) => {
-
-    return {
-        ...state,
-        isLoading: false,
-        user
     }
 };

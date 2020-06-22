@@ -1,41 +1,43 @@
 import * as types from "./types";
 
-export const authLogin = () => {
-    return {
-        type: types.STEAM_LOGIN
-    }
-}
+const steamLogin = () => ({
+    type: types.STEAM_LOGIN
+});
+const steamLoginCompleted = () => ({
+    type: types.STEAM_LOGIN_COMPLETED
+});
+const steamLoginFailed = payload => ({
+    type: types.STEAM_LOGIN_FAILED,
+    payload
+});
 
-export const authLoginCompleted = (payload) => {
-    return {
-        type: types.STEAM_LOGIN_COMPLETED,
-        payload
-    }
-}
 
-export const authLoginFailed = (payload) => {
-    return {
-        type: types.STEAM_LOGIN_FAILED,
-        payload
-    }
-}
+const steamLogout = () => ({
+    type: types.STEAM_LOGOUT
+});
+const steamLogoutCompleted = () => ({
+    type: types.STEAM_LOGOUT_COMPLETED,
+});
+const steamLogoutFailed = payload => ({
+    type: types.STEAM_LOGOUT_FAILED,
+    payload
+});
 
-export const authLogout = () => {
-    return {
-        type: types.STEAM_LOGOUT
-    }
-}
 
-export const authLogoutCompleted = (payload = null) => {
-    return {
-        type: types.STEAM_LOGOUT_COMPLETED,
-        payload
-    }
-}
+const setUser = () => ({
+    type: types.SET_USER
+});
+const setUserCompleted = payload => ({
+    type: types.SET_USER_COMPLETED,
+    payload
+});
+const setUserFailed = payload => ({
+    type: types.SET_USER_FAILED,
+    payload
+});
 
-export const authLogoutFailed = (payload = null) => {
-    return {
-        type: types.STEAM_LOGOUT_FAILED,
-        payload
-    }
+export {
+    steamLogin, steamLoginCompleted, steamLoginFailed,
+    steamLogout, steamLogoutCompleted, steamLogoutFailed,
+    setUser, setUserCompleted, setUserFailed
 }

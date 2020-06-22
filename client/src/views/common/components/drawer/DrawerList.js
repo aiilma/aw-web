@@ -9,12 +9,20 @@ import {Link} from "react-router-dom";
 export default function DrawerList({linkItems, ...props}) {
     return (
         <List>
-            {linkItems.map(link => (
-                <ListItem button component={Link} to={link.to} key={link.text}>
-                    <ListItemIcon>{link.icon}</ListItemIcon>
-                    <ListItemText primary={link.text}/>
-                </ListItem>
-            ))}
+            {linkItems.map(link => {
+                const overridenProps = {}
+                if (!!link.handler) overridenProps.onClick = link.handler
+
+                return (
+                    <ListItem button key={link.text}
+                              component={Link} to={link.to}
+                              {...overridenProps}
+                    >
+                        <ListItemIcon>{link.icon}</ListItemIcon>
+                        <ListItemText primary={link.text}/>
+                    </ListItem>
+                )
+            })}
         </List>
     );
 }
