@@ -32,8 +32,9 @@ return [
 
     'steam' => [
         'client_id' => null,
-        'client_secret' => env('STEAM_SECRET'),
-        'redirect' => env('STEAM_REDIRECT_URI')
+        'client_secret' => null,
+        'redirect' => env('STEAM_AUTH_REDIRECT'),
+        'api_key' => env('STEAM_API_KEY'),
     ],
 
 ];

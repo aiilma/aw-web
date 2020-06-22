@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers\Compositions;
 
-use http\Exception;
-use Illuminate\Http\Request;
-use App\Models\Composition;
 use App\Http\Controllers\BaseController;
+use App\Models\Composition;
+use Illuminate\Http\Request;
 
 class CompositionController extends BaseController
 {
     public function index(Request $request)
     {
-//        return response()->json(['message' => 'hello my name is'], 403);
         $minLim = 4;
         $maxLim = 8;
         $page = $request->get('page');
@@ -28,8 +26,6 @@ class CompositionController extends BaseController
             $comps = $query->paginate($maxLim, '*', 'page', 1);
         }
 
-
-//        return response()->json(['message' => 'some erka'], 403);
         return response()->json($comps, 200);
     }
 }

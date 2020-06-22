@@ -19,10 +19,8 @@ class CreateCompositionsTable extends Migration
             $table->string('title', 32)->default('unnamed');
             $table->decimal('price', 8, 2)->unsigned()->default(0.00);
             $table->bigInteger('type_variant_id')->unsigned()->nullable();
-            $table->json('ph')->nullable();
-            $table->json('images');
-            $table->json('badges')->nullable();
-            $table->string('src_file', 64)->unique();
+            $table->json('ph');
+            $table->json('badges');
             $table->bigInteger('author_id')->unsigned();
             $table->timestamp('published_at')->nullable();
             $table->dateTime('expires_at')->nullable();

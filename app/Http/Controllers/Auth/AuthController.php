@@ -2,84 +2,68 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
-use Laravel\Socialite\Two\InvalidStateException;
-use App\Models\User;
-use App\Models\SocialAccount;
-//use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Exception;
 use App\Http\Controllers\BaseController;
+use App\Models\{User, Role};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends BaseController
 {
-    /**
-     * Redirect the user to the Steam authentication page.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function steamLoginUrl()
     {
-        $url = response()->json([
+        $url = [
             'url' => Socialite::driver('steam')->stateless()->redirect()->getTargetUrl(),
-        ]);
+        ];
 
-        return $url;
+        return response()->json($url);
     }
 
-    /**
-     * Obtain the user information from Steam.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function steamLoginCallback()
     {
-        DB::beginTransaction();
-        try {
-            $steamUser = Socialite::driver('steam')->stateless()->user();
+        $steamUser = Socialite::driver('steam')->stateless()->user();
+        $user = null;
 
+        DB::transaction(function () use ($steamUser, &$user) {
             $steamid = $steamUser->getId();
-            $nickname = $steamUser->getNickname();
+            $username = $steamUser->getNickname();
             $avatar = $steamUser->getAvatar();
 
             $user = User::where('steamid', '=', $steamid)->first();
 
             if (!$user) {
+                // создание нового пользователя
                 $user = new User();
-                $user->nickname = $nickname;
+                $user->nickname = $username;
                 $user->steamid = $steamid;
                 $user->avatar = $avatar;
                 $user->save();
+
+                $roleId = Role::select('id')->where('name', 'user')->first(); // attach a new role
+                $user->roles()->attach($roleId);
             } else {
+                // update timestamp
                 $user->touch();
             }
+        });
 
-            // Manually login user
-            $this->guard()->loginUsingId($user->id);
-
-            DB::commit();
-
-            return response()->json(auth()->user(), 200);
-
-        } catch (Exception $e) {
-            DB::rollBack();
-            Log::error($e);
-
-            return response()->json(['message' => 'Timeout of steam auth'], 408);
-        }
+        return $user->createToken($user->nickname)->plainTextToken;
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::logout();
-        return response()->json(['message' => 'Logged Out'], 200);
+        $request->user()->tokens()->delete();
+        return response()->json('logout', 201);
     }
 
-    protected function guard()
+    public function me(Request $request)
     {
-        return Auth::guard();
+        // prepare data for response...
+        $user = $request->user()->only(['id', 'nickname', 'steamid', 'avatar', 'roles']);
+        $user['roles'] = $user['roles']->map(function ($role) {
+            return $role->name;
+        });
+
+        return $user;
     }
 }
