@@ -6,6 +6,9 @@
 /public/storage
 /storage/*.key
 
+.env
+deploy.php
+
 /vendor
 /ssh
 
