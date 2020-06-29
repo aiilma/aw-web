@@ -1,0 +1,138 @@
+{
+  "title": "upload composition POST request",
+  "type": "object",
+  "properties": {
+    "variant": {
+      "type": "string",
+      "pattern": "^short$|^long$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32
+    },
+    "price": {
+      "type": "number",
+      "minimum": 5,
+      "maximum": 99999
+    },
+    "attchs": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "size": {
+              "type": "number",
+              "minimum": 1048576,
+              "maximum": 15728640
+            },
+            "mime": {
+              "type": "string",
+              "pattern": "^image/gif$"
+            }
+          }
+        },
+        "sourceProject": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "size": {
+              "type": "number",
+              "minimum": 1048576,
+              "maximum": 52428800
+            },
+            "mime": {
+              "type": "string",
+              "pattern": "^application/x-compressed$|^application/x-zip-compressed$|^application/zip$|^multipart/x-zip$"
+            }
+          }
+        }
+      },
+      "required": [
+        "image",
+        "sourceProject"
+      ],
+      "additionalProperties": false
+    },
+    "ph": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "properties": {
+          "attrs": {
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 32
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              "max": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 32
+                  }
+                },
+                "required": [
+                  "value"
+                ],
+                "additionalProperties": false
+              },
+              "required": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "min",
+              "max",
+              "required"
+            ],
+            "attidionalProperties": false
+          },
+          "key": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "minimum": 1,
+            "maximum": 32
+          }
+        },
+        "required": [
+          "attrs",
+          "key",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "variant",
+    "title",
+    "price",
+    "attchs",
+    "ph"
+  ],
+  "additionalProperties": false
+}

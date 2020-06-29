@@ -6,10 +6,11 @@
 /public/storage
 /storage/*.key
 
-/vendor
-
 .env
-.env.backup
+deploy.php
+
+/vendor
+/ssh
 
 .phpunit.result.cache
 Homestead.json
