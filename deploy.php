@@ -4,8 +4,6 @@ namespace Deployer;
 require 'recipe/laravel.php';
 
 set('default_stage', 'production');
-
-// Project name
 set('application', 'artworch');
 
 // Project repository
@@ -17,13 +15,16 @@ add('shared_files', [
     '.env'
 ]);
 add('shared_dirs', [
-    'storage'
+    'storage', 'vendor'
 ]);
 add('writable_dirs', [
     'bootstrap/cache',
     'storage',
     'storage/app',
     'storage/app/public',
+    'storage/app/public/icons',
+    'storage/app/public/images',
+    'storage/app/compositions/sources',
     'storage/framework',
     'storage/framework/cache',
     'storage/framework/sessions',
@@ -34,14 +35,9 @@ add('writable_dirs', [
 // hosts
 host('37.140.192.78')
     ->user('u0987996')
+//    ->password('ASh7_m3W')
     ->port(22)
     ->stage('production')
-//    ->configFile('./ssh/config');
-//    ->identityFile('./ssh/id_rsa.ppk');
-//    ->forwardAgent(true)
-//    ->multiplexing(true)
-//    ->addSshOption('UserKnownHostsFile', '/dev/null')
-//    ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('deploy_path', '~/www/artworch.com');
 
 // tasks
