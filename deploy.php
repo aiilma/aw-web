@@ -32,8 +32,8 @@ add('writable_dirs', [
 ]);
 
 // hosts
-host('')
-    ->user('')
+host('37.140.192.78')
+    ->user('u0987996')
     ->port(22)
     ->stage('production')
 //    ->configFile('./ssh/config');
