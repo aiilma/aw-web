@@ -1,0 +1,25 @@
+{
+  "title": "user's suggestion cover letter POST request",
+  "type": "object",
+  "properties": {
+    "variant": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^short$|^long$"
+      }
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 3072
+    }
+  },
+  "required": [
+    "variant", "description"
+  ],
+  "additionalProperties": false
+}
