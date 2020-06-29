@@ -1,2 +1,6 @@
 *
+!icons
+!icons/*
+!images*
+!images/**
 !.gitignore
