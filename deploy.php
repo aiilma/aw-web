@@ -4,11 +4,6 @@ namespace Deployer;
 require 'recipe/laravel.php';
 
 set('default_stage', 'production');
-<<<<<<< HEAD
-
-// Project name
-=======
->>>>>>> master
 set('application', 'artworch');
 
 // Project repository
