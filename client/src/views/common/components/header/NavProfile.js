@@ -11,24 +11,21 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {logout} from "../../../../store/ducks/auth/operations";
 import {UserSrv} from "../../../../store/services/UserSrv";
 
-const Avatar = styled((props) => {
+const Avatar = styled(({nickname, avatar, handler, isLoading, ...props}) => {
     return (
         (<IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={props.handler}
-            color="inherit"
+            aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true"
+            color="inherit" title={nickname}
+            onClick={handler}
         >
-            {props.isLoading ? (
+            {isLoading ? (
                     <Skeleton
                         variant="circle"
                         width={32} height={32}
                     />
                 ) :
                 (<MaterialAvatar
-                    alt={props.nickname}
-                    src={props.avatar}
+                    src={avatar} alt={nickname}
                     style={{width: 32, height: 32,}}
                 />)}
         </IconButton>)
