@@ -1,0 +1,747 @@
+
+body.DefaultTheme {
+    --gradient-right: rgba(109, 38, 44, 0.301);
+    --gradient-left: rgba(50, 255, 193, 0.103);
+    --gradient-background: rgba(34, 35, 48, 0.93);
+    --gradient-background-right: rgba(109, 38, 44, 0);
+    --gradient-background-left: rgba(50, 255, 193, 0.103);
+    --color-showcase-header: rgba(43, 45, 68, 0.93);
+    --gradient-showcase-header-left: rgba(115, 173, 184, 0.247);
+    --btn-background: rgba(43, 52, 68, 1);
+    --btn-background-hover: rgb(53, 62, 78);
+    --btn-outline: rgb(93, 102, 118);
+}
+
+body.CosmicTheme {
+    --gradient-right: rgba(248, 70, 180, 0.301);
+    --gradient-left: rgba(9, 243, 99, 0.247);
+    --gradient-background: rgba(46, 13, 36, 0.93);
+    --gradient-background-right: rgba(70, 227, 248, 0);
+    --gradient-background-left: rgba(239, 243, 9, 0.13);
+    --color-showcase-header: rgba(57, 24, 61, 0.93);
+    --gradient-showcase-header-left: rgba(20, 60, 68, 0.93);
+    --btn-background: rgb(90, 40, 92);
+    --btn-background-hover: rgb(100, 50, 102);
+    --btn-outline: rgba(140, 90, 142, 1);
+}
+
+body.SummerTheme {
+    --gradient-right: rgba(252, 197, 16, 0.301);
+    --gradient-left: rgba(9, 243, 153, 0.247);
+    --gradient-background: rgba(51, 27, 16, 0.93);
+    --gradient-background-right: rgba(252, 197, 16, 0);
+    --gradient-background-left: rgba(48, 243, 9, 0.13);
+    --color-showcase-header: rgba(70, 53, 31, 0.93);
+    --gradient-showcase-header-left: rgba(33, 78, 76, 0.93);
+    --btn-background: rgb(95, 76, 39);
+    --btn-background-hover: rgb(105, 86, 49);
+    --btn-outline: rgb(145, 126, 89);
+}
+
+body.MidnightTheme {
+    --gradient-right: rgba(51, 54, 253, 0.233);
+    --gradient-left: rgba(12, 85, 241, 0.37);
+    --gradient-background: rgba(10, 14, 32, 0.93);
+    --gradient-background-right: rgba(51, 54, 253, 0);
+    --gradient-background-left: rgba(12, 85, 241, 0.13);
+    --color-showcase-header: rgba(34, 32, 61, 0.93);
+    --gradient-showcase-header-left: rgba(20, 33, 68, 0.93);
+    --btn-background: rgb(38, 36, 68);
+    --btn-background-hover: rgb(48, 46, 78);
+    --btn-outline: rgb(88, 86, 108);
+}
+
+body.DarkModeTheme {
+    --gradient-right: rgba(49, 49, 49, 0.233);
+    --gradient-left: rgba(51, 51, 51, 0.37);
+    --gradient-background: rgba(24, 24, 24, 0.93);
+    --gradient-background-right: rgba(34, 34, 34, 0);
+    --gradient-background-left: rgba(32, 32, 32, 0.13);
+    --color-showcase-header: rgba(0, 0, 0, 0.5);
+    --gradient-showcase-header-left: rgba(0, 0, 0, 0.5);
+    --btn-background: rgba(0, 0, 0, 0.5);
+    --btn-background-hover: rgba(40, 40, 40, 1);
+    --btn-outline: rgb(20, 20, 20);
+
+}
+
+body.SteelTheme {
+    --gradient-right: rgba(70, 106, 128, 0.233);
+    --gradient-left: rgba(86, 120, 134, 0.37);
+    --gradient-background: rgba(41, 46, 51, 0.93);
+    --gradient-background-right: rgba(17, 24, 29, 0);
+    --gradient-background-left: rgba(19, 27, 31, 0);
+    --color-showcase-header: rgba(55, 62, 76, 0.93);
+    --gradient-showcase-header-left: rgba(68, 83, 93, 0.93);
+    --btn-background: rgb(66, 76, 92);
+    --btn-background-hover: rgb(76, 86, 102);
+    --btn-outline: rgb(106, 126, 142);
+}
+
+body.GoldenProfileDebutTheme {
+    --gradient-right: rgba(156, 66, 17, 0.18);
+    --gradient-left: rgba(213, 172, 81, 0.62);
+    --gradient-background: rgba(61, 47, 20, 0.6);
+    --gradient-background-right: rgba(0, 0, 0, 0);
+    --gradient-background-left: rgba(243, 200, 9, 0.13);
+    --color-showcase-header: rgba(95, 72, 33, 0.82);
+    --gradient-showcase-header-left: rgba(155, 122, 54, 0.9);
+    --btn-background: rgb(125, 98, 44);
+    --btn-background-hover: rgb(135, 108, 54);
+    --btn-outline: rgb(175, 148, 94);
+}
+
+div.profile_page {
+    position: relative;
+    min-width: 950px;
+}
+
+body.profile_page,
+div.profile_page {
+    background-image: url('https://steamcommunity-a.akamaihd.net/public/images/profile/2020/bg_dots.png');
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-color: #000000;
+}
+
+body.profile_page.has_profile_background,
+div.profile_page.has_profile_background {
+    background-image: none;
+    background-color: #000000;
+    background-position: center top;
+    background-repeat: no-repeat;
+}
+
+div.profile_page.has_profile_background.full_width_background {
+    background-size: 100%;
+}
+
+@media ( max-width: 1920px ) {
+    div.profile_page.has_profile_background {
+        background-size: auto;
+    }
+}
+
+body.profile_page.has_profile_background {
+    background-color: #000000;
+}
+
+.profile_animated_background {
+    position: absolute;
+
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+
+.profile_animated_background > video {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1920px;
+}
+
+div.profile_page.has_profile_background.full_width_background .profile_animated_background > video {
+    width: 100%;
+}
+
+@media ( max-width: 1920px ) {
+    div.profile_page.has_profile_background.full_width_background .profile_animated_background > video {
+        width: 1920px;
+    }
+}
+
+/* this is a workaround for webkit centering bug with backgrounds that are larger than the window */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    div.profile_page.has_profile_background {
+        background-position: 49.999% 0;
+    }
+}
+
+
+.profile_header_bg {
+    position: relative;
+    max-width: 1018px;
+    min-height: 224px;
+    padding-bottom: 0px;
+    margin: 0 auto;
+
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+.profile_header_bg_texture {
+    max-width: 976px;
+    min-height: 224px;
+    margin: 0 auto;
+    background: radial-gradient(
+            farthest-side at bottom right,
+            var(--gradient-right),
+            transparent 500px
+    ),
+    radial-gradient(
+            farthest-corner at bottom left,
+            var(--gradient-left),
+            transparent 600px
+    );
+    background-color: var(--gradient-background);
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+
+.profile_header {
+    position: relative;
+    max-width: 926px;
+    margin: 0 auto;
+    padding-top: 24px;
+
+}
+
+.profile_header_content {
+    position: relative;
+    padding-top: 8px;
+    padding-right: 8px;
+    color: #898989;
+    font-size: 13px;
+}
+
+.profile_header_summary {
+    overflow: hidden;
+    padding-right: 18px;
+}
+
+.playerAvatar.profile_header_size {
+    position: relative;
+    width: 166px;
+    height: 166px;
+}
+
+.playerAvatar.profile_header_size .playerAvatarAutoSizeInner img {
+
+    /* override the gradient behind the image (it won't show anyway) */
+    background: none;
+    filter: none;
+
+    /* fix space appearing beneath image */
+    display: block;
+
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.playerAvatar.profile_header_size .playerAvatarAutoSizeInner {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    bottom: 2px;
+    left: 2px;
+}
+
+.playerAvatar.profile_header_size .playerAvatarAutoSizeInner .profile_avatar_frame {
+}
+
+.playerAvatar.profile_header_size .playerAvatarAutoSizeInner .profile_avatar_frame > img {
+    transform: scale(1.22);
+}
+
+
+.profile_header .playerAvatar.profile_header_size {
+    float: left;
+    margin-right: 18px;
+}
+
+.profile_header_badgeinfo {
+    float: right;
+}
+
+.profile_header_badgeinfo_badge_area {
+    width: 268px;
+}
+
+@media screen and ( max-width: 700px ) {
+    html.responsive .profile_header_summary {
+        clear: both;
+        padding: 8px;
+    }
+
+    html.responsive .profile_header .profile_summary.noexpand {
+        height: auto;
+    }
+
+    html.responsive .profile_header .playerAvatar.profile_header_size {
+        max-width: 40%;
+    }
+
+    html.responsive .profile_header .profile_header_centered_persona {
+        position: static;
+        padding-bottom: 8px;
+    }
+
+    html.responsive .profile_header .profile_header_summary .persona_name_spacer,
+    html.responsive .profile_header .profile_header_summary .header_real_name_spacer {
+        display: none;
+    }
+
+    html.responsive .profile_header_content {
+        padding-top: 0;
+    }
+
+    html.responsive .profile_header {
+        padding-top: 8px;
+    }
+
+    html.responsive .profile_header_bg_texture {
+        background-size: cover;
+    }
+
+    html.responsive .profile_header_badgeinfo {
+        float: none;
+        overflow: hidden;
+    }
+
+}
+
+@media screen and ( max-width: 460px ) {
+
+    html.responsive .profile_header_badgeinfo {
+        float: none;
+        overflow: visible;
+    }
+
+    html.responsive .profile_header_badgeinfo_badge_area {
+        float: none;
+        overflow: hidden;
+        max-width: 50%;
+        max-width: calc(100% - 125px - 20px);
+    }
+
+    html.responsive .profile_header_badgeinfo_badge_area .profile_header_badge {
+        margin-bottom: 0;
+    }
+
+    html.responsive .profile_header_actions {
+        clear: both;
+        padding-top: 8px;
+        text-align: center;
+    }
+
+    html.responsive .profile_header .playerAvatar.profile_header_size {
+        max-width: none;
+        width: 125px;
+        height: 125px;
+    }
+}
+
+.profile_header_actions {
+    white-space: nowrap;
+}
+
+.profile_header .persona_name {
+    line-height: 40px;
+    font-size: 24px;
+    color: #ffffff;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 200; /* thin */
+
+}
+
+.profile_header .profile_header_centered_persona {
+    position: absolute;
+    left: 186px;
+    right: 268px;
+    white-space: nowrap;
+}
+
+.header_real_name_spacer {
+    height: 52px;
+}
+
+.profile_header .profile_summary {
+    line-height: 18px;
+    height: 57px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.profile_header .profile_summary.noexpand {
+    height: 76px;
+}
+
+.profile_header_badge {
+    border-radius: 3px;
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 123px;
+    margin-bottom: 13px;
+}
+
+.btn_profile_action {
+    border-radius: 2px;
+    color: lightgray !important;
+    padding: 1px;
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: var(--btn-background);
+    transition: all 0.1s ease-in-out;
+}
+
+.btn_profile_action > span {
+
+    border-radius: 2px;
+    display: block;
+    background-color: var(--btn-background);
+}
+
+.btn_profile_action:hover, .btn_profile_action.focus {
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--btn-background-hover);
+    filter: drop-shadow(1px 5px 10px rgba(0, 0, 0, 0.25));
+
+}
+
+.btn_profile_action:hover > span, .btn_profile_action.focus > span {
+    background-color: var(--btn-background-hover);
+    color: #fff;
+}
+
+.profile_content {
+    position: relative;
+    background: radial-gradient(
+            farthest-side at top right,
+            var(--gradient-right),
+            transparent 500px
+    ),
+    radial-gradient(
+            farthest-corner at top left,
+            var(--gradient-left),
+            transparent 600px
+    ),
+    radial-gradient(
+            farthest-corner at bottom right,
+            var(--gradient-background-right),
+            transparent 500px
+    ),
+    radial-gradient(
+            farthest-corner at bottom left,
+            var(--gradient-background-left),
+            transparent 600px
+    );
+    background-color: var(--gradient-background);
+    background-repeat: no-repeat;
+    padding: 12px 12px 64px 12px;
+    width: 952px;
+    margin: 0 auto;
+
+    font-size: 13px;
+
+    min-height: calc(100vh - 511px);
+}
+
+.profile_content.has_profile_background {
+    background: radial-gradient(
+            farthest-side at top right,
+            var(--gradient-right),
+            transparent 500px
+    ),
+    radial-gradient(
+            farthest-corner at top left,
+            var(--gradient-left),
+            transparent 600px
+    ),
+    radial-gradient(
+            farthest-corner at bottom right,
+            var(--gradient-background-right),
+            transparent 500px
+    ),
+    radial-gradient(
+            farthest-corner at bottom left,
+            var(--gradient-background-left),
+            transparent 600px
+    );
+    background-color: var(--gradient-background);
+    margin-top: 0px;
+    overflow: hidden;
+    padding-top: 16px;
+}
+
+.profile_content_inner {
+    position: relative;
+}
+
+.profile_leftcol {
+    width: 652px;
+    float: left;
+}
+
+.profile_rightcol {
+    background-color: #101214;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    padding: 10px;
+    border-radius: 0px;
+    width: 268px;
+    float: right;
+}
+
+.profile_customization {
+    position: relative;
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 0px;
+    padding: 0px 0px 0px 0px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    overflow: hidden;
+}
+
+
+.profile_customization_block {
+    position: relative;
+    border-radius: 5px;
+    padding: 20px 10px 11px 10px;
+    margin-bottom: 0px;
+    font-size: 13px;
+    overflow: hidden;
+}
+
+.myart .profile_customization_block {
+    position: relative;
+    border-radius: 5px;
+    padding: 15px 10px 11px 10px;
+    margin-bottom: 0px;
+    font-size: 13px;
+    overflow: hidden;
+}
+
+.profile_customization_header {
+
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 200; /* thin */
+
+    background: var(--color-showcase-header);
+    background: linear-gradient(90deg, var(--gradient-showcase-header-left) 0%, var(--color-showcase-header) 90%);
+    padding: 5px 10px 5px 10px;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.profile_customization.myart .profile_customization_header {
+    display: none;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 200; /* thin */
+
+    background: var(--color-showcase-header);
+    background: linear-gradient(90deg, var(--gradient-showcase-header-left) 0%, var(--color-showcase-header) 90%);
+    padding: 5px 10px 5px 10px;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.showcase_slot {
+    display: block;
+    float: left;
+    position: relative;
+}
+
+.screenshot_showcase_primary {
+    width: 508px;
+    max-width: calc(83% - 7px);
+    float: left;
+    margin-right: 7px;
+}
+
+.screenshot_showcase_screenshot {
+    cursor: pointer;
+    border: 1px solid #000000;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.screenshot_showcase_screenshot:hover {
+    border: 1px solid #97C0E3;
+}
+
+.screenshot_showcase_primary .screenshot_showcase_screenshot {
+    margin-bottom: 4px;
+}
+
+.screenshot_showcase_screenshot img {
+    display: block;
+}
+
+.screenshot_showcase_itemname {
+    word-wrap: break-word;
+}
+
+.screenshot_showcase_rightcol {
+    overflow: hidden;
+    max-width: 17%;
+    width: 102px;
+    text-align: center;
+}
+
+.screenshot_showcase_smallscreenshot {
+    float: none;
+    margin-bottom: 11px;
+}
+
+.screenshot_showcase_smallscreenshot.screenshot_count {
+    display: block;
+    height: 57px;
+    line-height: 57px;
+    background-color: #222223;
+    color: #ffffff;
+}
+
+.screenshot_showcase_stats {
+    line-height: 24px;
+}
+
+.screenshot_showcase_stat {
+    margin-right: 12px;
+    cursor: default;
+}
+
+.screenshot_showcase_stats .screenshot_showcase_staticon {
+    vertical-align: text-bottom;
+}
+
+.profile_count_link {
+    font-size: 14px;
+    margin-bottom: 4px;
+    min-height: 29px;
+}
+
+.profile_count_link a:hover .count_link_label {
+    text-decoration: underline;
+}
+
+.profile_count_link_total {
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: 200; /* thin */
+
+    color: #9b9b9b;
+    font-size: 24px;
+}
+
+.profile_badges, .profile_item_links, .profile_group_links, .profile_friend_links {
+    margin-bottom: 40px;
+}
+
+@media screen and (max-width: 910px) {
+    html.responsive div.profile_page {
+        min-width: 0;
+    }
+
+    html.responsive .profile_header_bg {
+        min-width: 0;
+    }
+
+    html.responsive .profile_header {
+        width: auto;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    html.responsive .profile_content {
+        width: auto;
+        font-size: inherit;
+    }
+
+    html.responsive .profile_count_link {
+        font-size: inherit;
+    }
+
+    html.responsive .profile_content.has_profile_background {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
+    }
+
+    html.responsive .profile_leftcol, html.responsive .profile_rightcol {
+        float: none;
+        width: auto;
+        padding: 0 1%;
+    }
+
+    html.responsive .responsive_count_link_area {
+        margin: 0 -4px;
+    }
+
+    html.responsive .profile_count_link,
+    html.responsive .profile_count_link_preview_ctn {
+        background: rgba(0, 0, 0, 0.5);
+        display: block;
+        float: left;
+        padding: 8px;
+        margin: 0 4px 4px 4px;
+        height: 29px;
+    }
+
+    html.responsive .profile_count_link_total {
+        font-size: 20px;
+    }
+
+    html.responsive .profile_item_links {
+        margin-bottom: 12px;
+    }
+}
+
+@media screen and (min-width: 661px) and (max-width: 910px) {
+    html.responsive .profile_count_link,
+    html.responsive .profile_count_link_preview_ctn {
+        width: calc(25% - 16px - 8px);
+    }
+}
+
+@media screen and (min-width: 521px) and ( max-width: 660px ) {
+
+    html.responsive .profile_count_link,
+    html.responsive .profile_count_link_preview_ctn {
+        width: calc(33% - 16px - 8px);
+    }
+}
+
+@media screen and (max-width: 520px) {
+
+    html.responsive .profile_count_link,
+    html.responsive .profile_count_link_preview_ctn {
+        width: calc(50% - 16px - 8px);
+    }
+
+    html.responsive .profile_count_link:nth-child(2n) {
+        /* margin-right: 0; */
+    }
+}
+
+@media screen and (max-width: 910px) {
+    html.responsive body.profile_page .responsive_page_template_content {
+        padding-bottom: 0;
+    }
+
+    html.responsive body.profile_page .profile_content_inner {
+        padding-bottom: 120px;
+    }
+
+}
