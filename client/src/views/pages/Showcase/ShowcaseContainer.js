@@ -12,20 +12,42 @@ import RShortSecondaryTwo from "./assets/short_secondary2.jpg";
 import RShortSecondaryTree from "./assets/short_secondary3.jpg";
 import {ToolbarSpacer} from "../../ui/layout";
 import Header from "../../common/components/header/Header";
-import SteamBackground from "./SteamBackground";
-import ProfileHeader from "./ProfileHeader/ProfileHeader";
-import ProfileContent from "./ProfileContent/ProfileContent";
+import {Clear, FullWidthBg, ResponsivePageContent, ResponsivePageFrame, ResponsivePageTemplateContent} from "./ui";
+import {DefaultTheme} from "./ui/themes";
+import {HeaderBg, HeaderBgTexture, ProfileHeader} from "./ui/header";
+import {ContentHasBg, ProfileContentInner,} from "./ui/content";
+import LeftCol from "./components/LeftCol";
+import RightCol from "./components/RightCol";
+import HeaderContent from "./components/HeaderContent";
 
+const ScWrapper = ({theme: Theme, children, ...props}) => {
+    return (
+        <Theme>
+            <ResponsivePageFrame>
+                <ResponsivePageContent>
+                    <ResponsivePageTemplateContent>
+                        {children}
+                    </ResponsivePageTemplateContent>
+                </ResponsivePageContent>
+            </ResponsivePageFrame>
+        </Theme>
+    )
+}
 
-const a = {
-    background: RLongBg,
+// FICTIVE DATA
+const long = {
+    bg: {
+        resource: RLongBg
+    },
     images: {
         primary: RLongPrimaryImage,
         secondaries: [RLongSecondary],
     }
 }
-const b = {
-    background: RShortBg,
+const short = {
+    bg: {
+        resource: RShortBg
+    },
     images: {
         primary: RShortPrimary,
         secondaries: [RShortSecondaryOne, RShortSecondaryTwo, RShortSecondaryTree,],
@@ -37,22 +59,51 @@ class ShowcaseContainer extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            userInfo: {username: 'solid8_', avatar: RAvatarProfile,},
-            project: a,
+            userInfo: {
+                username: `hi, this nmae isn't big enough, so i'll introduce a blank to you`,
+                avatar: RAvatarProfile,
+            },
+            project: long,
         }
-
     }
 
     render() {
+        const {
+            userInfo: {avatar, username},
+            project: {images, bg},
+        } = this.state
+
+        const {theme} = this.props
+        const headersHeight = 224
+
         return (<>
             <Header/>
-            <ToolbarSpacer theme={this.props.theme}/>
+            <ToolbarSpacer theme={theme}/>
 
-            <SteamBackground bg={this.state.project.background}>
-                <ProfileHeader userInfo={this.state.userInfo}/>
-                <ProfileContent images={this.state.project.images}/>
-            </SteamBackground>
+            <ScWrapper theme={DefaultTheme}>
+                <FullWidthBg resource={bg.resource}>
 
+                    {/* test component for animated backgrounds */}
+                    {/*{bg.isAnimated && <ProfileAnimatedBg resource={bg.resource}/>}*/}
+
+                    <HeaderBg minHeight={headersHeight}>
+                        <HeaderBgTexture>
+                            <ProfileHeader>
+                                <HeaderContent userName={username} avatar={avatar}/>
+                            </ProfileHeader>
+                        </HeaderBgTexture>
+                    </HeaderBg>
+                    <ContentHasBg headersHeight={headersHeight + theme.mixins.toolbar.minHeight}>
+                        <ProfileContentInner>
+                            <RightCol/>
+                            <LeftCol images={images}/>
+                            <Clear where={`both`}/>
+                        </ProfileContentInner>
+                    </ContentHasBg>
+
+
+                </FullWidthBg>
+            </ScWrapper>
         </>)
     }
 }
