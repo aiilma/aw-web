@@ -29,9 +29,6 @@ const ProfileCustomizationMyArt = styled(ProfileCustomization)`
 `
 
 const ProfileCustomizationHeader = styled((props) => <div {...props}>{props.label}</div>)`
-    color: #dcc570;
-    font-weight: normal;
-
     font-family: "Motiva Sans", Sans-serif;
     font-weight: 200; /* thin */
 

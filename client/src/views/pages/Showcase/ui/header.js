@@ -55,7 +55,6 @@ const ProfileHeaderContent = styled.div`
     padding-right: 8px;
     color: #898989;
     font-size: 13px;
-    color: #dcc570;
     
     @media screen and ( max-width: 700px ) {
         padding-top: 0;
@@ -235,7 +234,6 @@ const ProfileSummary = styled.div`
         height: 57px;
         overflow: auto;
         margin-bottom: 8px;
-        color: #dcc570;
         padding-left: 5px;
         
         ${(props) => props.noexpand && `
