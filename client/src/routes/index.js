@@ -21,7 +21,7 @@ const Routes = () => {
 
                 {/*AUTHENTICATED*/}
                 <PrivateRoute exact path="/suggest" component={SuggestForm}/>
-                <PrivateRoute exact path="/showcase/:id" component={Showcase}/>
+                <PrivateRoute exact path="/showcase/:alias" component={Showcase}/>
 
 
                 {/*PUBLIC*/}

@@ -96,7 +96,7 @@ const ScSlotMixin = css`
 
 const ScShowCaseSc = styled(({src, ...props}) => {
     return <SteamLink {...props}>
-        <img width="100%" src={src}/>
+        <img width="100%" src={src} alt={`Showcase`}/>
     </SteamLink>
 })`
     cursor: pointer;
