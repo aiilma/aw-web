@@ -10,6 +10,7 @@ const EnhancedForm = withFormik({
     mapPropsToValues: () => {
         return {
             typeVariant: undefined,
+            bglink: '',
             title: '',
             price: '',
             uploads: {

@@ -7,7 +7,7 @@ const {
     PRICE_MIN_LEN, PRICE_MAX_LEN
 } = PROPERTIES;
 const {
-    vldTypeVariant, vldTitle, vldPrice,
+    vldTypeVariant, vldBgLink, vldTitle, vldPrice,
     vldFileImage, vldFileSourceProject
 } = NECESSARIES;
 const {
@@ -17,6 +17,7 @@ const {
 export const vldSchema = (values) => {
     return yup.object().shape({
         typeVariant: vldTypeVariant(),
+        bglink: vldBgLink(),
         title: vldTitle(TITLE_MIN_LEN, TITLE_MAX_LEN),
         price: vldPrice(PRICE_MIN_LEN, PRICE_MAX_LEN),
         uploads: yup.object().shape({
