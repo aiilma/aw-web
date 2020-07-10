@@ -2,9 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class Users extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +14,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nickname', 32);
-            $table->string('steamid', 48)->unique();
-            $table->string('avatar')->nullable();
+        if (!Schema::hasTable('users')) {
+            Schema::create('users', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('nickname', 32);
+                $table->string('steamid', 48)->unique();
+                $table->string('avatar')->nullable();
 //            $table->string('password')->nullable();
 //            $table->rememberToken();
-            $table->timestamps();
-        });
+                $table->timestamps();
+            });
+        }
     }
 
     /**
