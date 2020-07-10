@@ -9,7 +9,7 @@ class Composition extends Model
     protected $hidden = ['id', 'author_id'];
 
     protected $fillable = [
-        'link', 'title', 'price', 'type_variant_id',
+        'link', 'bg', 'title', 'price', 'type_variant_id',
         'ph', 'badges', 'author_id',
         'published_at', 'expires_at',
     ];

@@ -18,6 +18,7 @@ class CompositionsController extends Controller
     protected $imagesRepository = null;
     protected $thumbImgName = "__static.gif";
     protected $demoImgName = "__dynamic.gif";
+    protected $bgName = "__background";
     protected $projectName = "__parcel.zip";
 
     public function __construct()
@@ -36,6 +37,7 @@ class CompositionsController extends Controller
             // данные с формы...
             $data = (object)[
                 'variant' => $request->has('typeVariant') ? $request->input('typeVariant') : null,
+                'bg' => $request->has('bglink') ? $request->input('bglink') : null,
                 'title' => $request->has('title') ? $request->input('title') : null,
                 'price' => $request->has('price') ? json_decode($request->input('price')) : null,
                 'attchs' => (object)[],
@@ -52,7 +54,7 @@ class CompositionsController extends Controller
                     $data->attchs->{$fName}->mime = $f->getClientMimeType();
                 }
             }
-            // преобразование чисел из строки внутри мета-информации аттрибутов
+            // преобразование числовых типов из строки внутри мета-информации аттрибутов
             foreach ($data->ph as $key => $input) {
                 $data->ph[$key]->attrs->max->value = (int)$input->attrs->max->value;
                 $data->ph[$key]->attrs->min->value = (int)$input->attrs->min->value;
@@ -71,8 +73,28 @@ class CompositionsController extends Controller
                 return response()->json(['message' => "Incorrect value for {$inputName} specified"], 400);
             }
 
+
+            // подготовка данных к добавлению в БД
             $uploadedAt = now();
-            $compLink = $this->generateCompLink($user->steamid, $uploadedAt->timestamp, $data->title);
+            $compAlias = $this->generateCompLink($user->steamid, $uploadedAt->timestamp, $data->title);
+
+            // суффикс ссылки на фон, если она была указана
+            $bgSuffix = null;
+            if ($bgUrl = $data->bg) {
+                $bgFileFormat = ".webm";
+                if (!strpos($bgUrl, $bgFileFormat)) $bgFileFormat = ".jpg"; // если URL указывает на не анимацию, значит это JPG картинка
+
+                $steamCdnBgMatch = "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/";
+                $cutLen = strlen($steamCdnBgMatch);
+                $bgSuffix = substr($bgUrl, $cutLen);
+
+                // save background to directory by alias
+                if (!$contents = @file_get_contents($bgUrl)) {
+                    return response()->json(['message' => "Wrong URL to a steam background was specified"], 400);
+                }
+
+                Storage::disk('compAssets')->put("/$compAlias/{$this->bgName}{$bgFileFormat}", $contents);
+            }
 
             // retrieving ID of type variant by its name
             $typeVariant = TypeVariant::firstWhere('name', $data->variant);
@@ -90,16 +112,16 @@ class CompositionsController extends Controller
             }
 
             // сохранить превью композиции и сгенерировать тумбочку на базе анимации
-            $distDir = "$this->imagesRepository/$compLink";
+            $distDir = "$this->imagesRepository/$compAlias";
             $dynamicImg = $request->file('image')->move($distDir, $this->demoImgName);
             $staticImg = Image::make($dynamicImg->getRealPath());
-            Storage::put("/public/images/comps/$compLink/$this->thumbImgName", $staticImg->encode('gif'));
+            Storage::disk('compAssets')->put("/$compAlias/$this->thumbImgName", $staticImg->encode('gif'));
             $staticImg->destroy();
             // сохранить проект композиции в директорию
-            Storage::disk('compSources')->put("/$compLink/$this->projectName", file_get_contents($request->file('sourceProject')->getRealPath()));
+            Storage::disk('compSources')->put("/$compAlias/$this->projectName", file_get_contents($request->file('sourceProject')->getRealPath()));
 
 
-            $this->save($compLink, $data->title, $data->price, $tvId, $ph, [], $user->id, $uploadedAt, null);
+            $this->save($compAlias, $bgSuffix, $data->title, $data->price, $tvId, $ph, [], $user->id, $uploadedAt, null);
 
             return response()->json(['message' => 'OK'], 200);
 
@@ -119,10 +141,11 @@ class CompositionsController extends Controller
         return $link;
     }
 
-    private function save($link, $title, $price, $typeVariantId, $ph, $badges, $authorId, $publishedAt, $expiresAt)
+    private function save($alias, $bgSuffix, $title, $price, $typeVariantId, $ph, $badges, $authorId, $publishedAt, $expiresAt)
     {
         $composition = [
-            "link" => $link,
+            "link" => $alias,
+            "bg" => $bgSuffix,
             'title' => $title,
             'price' => $price,
             'type_variant_id' => $typeVariantId,
