@@ -18,7 +18,6 @@ class CompositionsController extends Controller
     protected $imagesRepository = null;
     protected $thumbImgName = "__static.gif";
     protected $demoImgName = "__dynamic.gif";
-    protected $bgName = "__background";
     protected $projectName = "__parcel.zip";
 
     public function __construct()
@@ -81,19 +80,9 @@ class CompositionsController extends Controller
             // суффикс ссылки на фон, если она была указана
             $bgSuffix = null;
             if ($bgUrl = $data->bg) {
-                $bgFileFormat = ".webm";
-                if (!strpos($bgUrl, $bgFileFormat)) $bgFileFormat = ".jpg"; // если URL указывает на не анимацию, значит это JPG картинка
-
                 $steamCdnBgMatch = "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/";
                 $cutLen = strlen($steamCdnBgMatch);
                 $bgSuffix = substr($bgUrl, $cutLen);
-
-                // save background to directory by alias
-                if (!$contents = @file_get_contents($bgUrl)) {
-                    return response()->json(['message' => "Wrong URL to a steam background was specified"], 400);
-                }
-
-                Storage::disk('compAssets')->put("/$compAlias/{$this->bgName}{$bgFileFormat}", $contents);
             }
 
             // retrieving ID of type variant by its name
