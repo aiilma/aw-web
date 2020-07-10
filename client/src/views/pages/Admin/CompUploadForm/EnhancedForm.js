@@ -39,7 +39,7 @@ const EnhancedForm = withFormik({
         // send...
         (new AdminSrv()).uploadComp(data).then(res => {
             setSubmitting(false);
-            // resetForm();
+            resetForm();
 
             enqueueSnackbar('OK', {
                 variant: 'success',
