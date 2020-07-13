@@ -67,7 +67,7 @@ export const NECESSARIES = (() => {
         return yup.string()
             .typeError('Must be a string')
             .url(`The url isn't valid`)
-            .matches(/^https:\/\/steamcdn-a\.akamaihd\.net\/steamcommunity\/public\/images\/items\/[0-9]{6,7}\/.*\.(jpg|webm)$/g, `This is not a steam's background link`)
+            .matches(/^https:\/\/steamcdn-a\.akamaihd\.net\/steamcommunity\/public\/images\/items\/[0-9]{1,7}\/.*\.(jpg|webm)$/g, `This is not a steam's background link`)
     };
 
     const vldPrice = (moreThan, lessThan) => {
