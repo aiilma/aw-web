@@ -17,7 +17,7 @@ const Api = () => {
 
 export class AWSrv {
 
-    async getResource(url) {
+    getResource = async (url) => {
         try {
             const res = await Api().get(url)
             return res.data;
@@ -35,7 +35,7 @@ export class AWSrv {
         }
     }
 
-    async postResource(url, data) {
+    postResource = async (url, data) => {
         try {
             const res = await Api().post(url, data)
             return res.data;

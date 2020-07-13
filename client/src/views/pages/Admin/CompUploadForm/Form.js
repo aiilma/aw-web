@@ -79,6 +79,7 @@ const CompUploadForm = (props) => {
 
 
                         {/*text fields*/}
+                        <FastField component={Placeholder} name="bglink" label="Background Link"/>
                         <FastField component={Placeholder} name="title" label="Title"/>
                         <FastField component={Placeholder} name="price" label="Price"
                                    startAdornment={<InputAdornment position="start">$</InputAdornment>}/>

@@ -53,6 +53,11 @@ return [
             'root' => storage_path('app/compositions/sources'),
         ],
 
+        'compAssets' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/images/comps'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

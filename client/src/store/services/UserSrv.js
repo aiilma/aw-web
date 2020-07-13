@@ -2,27 +2,27 @@ import {AWSrv} from "./AWSrv";
 import LS from "../utils/LS";
 
 export class UserSrv extends AWSrv {
-    async getSteamLink() {
+    getSteamLink = async () => {
         const res = await this.getResource(`/login/steam`)
         return res.url
     }
 
-    async auth(params) {
+    auth = async (params) => {
         return await this.getResource(`/login/steam/callback${params}`)
     }
 
-    async logout() {
+    logout = async () => {
         return await this.postResource(`/logout`)
     }
 
-    async me() {
+    me = async () => {
         return await this.getResource(`/user`)
     }
 
-    isAuth() {
+    isAuth = () => {
         return localStorage.getItem(LS._AUTH_TOK)
     }
-    hasRole(role, roles) {
+    hasRole = (role, roles) => {
         return !!roles.includes(role);
     }
 }

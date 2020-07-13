@@ -10,5 +10,7 @@ class TypeVariant extends Model
         'name', 'slots_count'
     ];
 
+    protected $hidden = ['id'];
+
     public $timestamps = false;
 }

@@ -6,6 +6,17 @@
       "type": "string",
       "pattern": "^short$|^long$"
     },
+    "bg": {
+      "if": {
+        "type": "string"
+      },
+      "then": {
+        "pattern": "^https:\\/\\/steamcdn-a\\.akamaihd\\.net\\/steamcommunity\\/public\\/images\\/items\\/[0-9]{1,7}\\/.*\\.(jpg|webm)$|^$"
+      },
+      "else": {
+        "const": null
+      }
+    },
     "title": {
       "type": "string",
       "minLength": 1,

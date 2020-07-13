@@ -9,7 +9,7 @@ class Composition extends Model
     protected $hidden = ['id', 'author_id'];
 
     protected $fillable = [
-        'link', 'title', 'price', 'type_variant_id',
+        'link', 'bg', 'title', 'price', 'type_variant_id',
         'ph', 'badges', 'author_id',
         'published_at', 'expires_at',
     ];
@@ -29,5 +29,10 @@ class Composition extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
+    }
+
+    public function typeVariant()
+    {
+        return $this->belongsTo(TypeVariant::class, 'type_variant_id', 'id');
     }
 }

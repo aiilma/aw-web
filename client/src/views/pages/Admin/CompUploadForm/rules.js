@@ -62,6 +62,14 @@ export const NECESSARIES = (() => {
             .min(min, `Minimal length is ${min} characters`).max(max, `Maximum length is exceeded`)
     };
 
+    // https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/542680/a01441c54ae4f6df2391dad9aaead8479aeeb9fc.(jpg|webm)
+    const vldBgLink = () => {
+        return yup.string()
+            .typeError('Must be a string')
+            .url(`The url isn't valid`)
+            .matches(/^https:\/\/steamcdn-a\.akamaihd\.net\/steamcommunity\/public\/images\/items\/[0-9]{1,7}\/.*\.(jpg|webm)$/g, `This is not a steam's background link`)
+    };
+
     const vldPrice = (moreThan, lessThan) => {
         return yup.number()
             .required("Required")
@@ -88,7 +96,7 @@ export const NECESSARIES = (() => {
     };
 
     return {
-        vldTypeVariant, vldTitle, vldPrice,
+        vldTypeVariant, vldBgLink, vldTitle, vldPrice,
         vldFileImage, vldFileSourceProject
     };
 

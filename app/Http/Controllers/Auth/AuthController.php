@@ -34,15 +34,17 @@ class AuthController extends BaseController
             if (!$user) {
                 // создание нового пользователя
                 $user = new User();
-                $user->nickname = $username;
                 $user->steamid = $steamid;
+                $user->nickname = $username;
                 $user->avatar = $avatar;
                 $user->save();
 
                 $roleId = Role::select('id')->where('name', 'user')->first(); // attach a new role
                 $user->roles()->attach($roleId);
             } else {
-                // update timestamp
+                // update user's info + timestamp data activity
+                $user->nickname = $username;
+                $user->avatar = $avatar;
                 $user->touch();
             }
         });
