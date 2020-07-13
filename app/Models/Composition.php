@@ -30,4 +30,9 @@ class Composition extends Model
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
     }
+
+    public function typeVariant()
+    {
+        return $this->belongsTo(TypeVariant::class, 'type_variant_id', 'id');
+    }
 }
