@@ -97,17 +97,14 @@ const FullWidthBg = styled.div`
     ${ProfilePageMixin}
     ${HasBgMixin}
     background-size: 100%;
-    background-image: url(${(props) => props.resource || `https://steamcommunity-a.akamaihd.net/public/images/profile/2020/bg_dots.png`});
+    background-image: url(${(props) => props.bg || `https://steamcommunity-a.akamaihd.net/public/images/profile/2020/bg_dots.png`});
 `
 //-------------------
 
 const ProfileAnimatedBg = styled(({className, resource, ...props}) => {
-    const {poster, webm, mp4} = resource
-
     return <div className={className} {...props}>
-        <video playsInline autoPlay muted loop poster={poster}>
-            <source src={webm} type="video/webm"/>
-            <source src={mp4} type="video/mp4"/>
+        <video playsInline autoPlay muted loop>
+            <source src={resource} type="video/webm"/>
         </video>
     </div>
 })`

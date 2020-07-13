@@ -1,7 +1,7 @@
 import React from "react";
 import styled, {css} from "styled-components";
 import {CommonBetweenCols} from "./content";
-import {SteamLink} from "./index";
+import {Clear, SteamLink} from "./index";
 
 const LeftColWrapper = styled.div`
     width: 652px;
@@ -85,7 +85,12 @@ const ProfileCustomizationBlock = styled.div`
 // *******************
 // SCREENSHOT SHOWCASE
 
-const ScShowCase = styled.div`
+const ScShowCase = styled(({className, children, ...props}) => {
+    return <div className={className} {...props}>
+        {children}
+        <Clear where={`both`}/>
+    </div>
+})`
 `
 
 const ScSlotMixin = css`

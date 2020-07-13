@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Ellipsis, SteamLink} from "./index";
+import {Clear, Ellipsis, SteamLink} from "./index";
 import {CommonBetweenCols} from "./content";
 
 const RightColWrapper = styled.div`
@@ -20,7 +20,12 @@ const ResponsiveCountLinkArea = styled.div`
     }
 `
 
-const ProfileItemLinks = styled.div`
+const ProfileItemLinks = styled(({className, children, ...props}) => {
+    return <div className={className} {...props}>
+        {children}
+        <Clear where={`left`}/>
+    </div>
+})`
     margin-bottom: 40px;
     
     @media screen and (max-width: 910px) {

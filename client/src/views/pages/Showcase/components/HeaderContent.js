@@ -12,7 +12,6 @@ import {
     ProfileSummary,
     UserNameSpacer
 } from "../ui/header";
-import {BtnProfileAction} from "../ui/buttons";
 
 const HeaderContent = ({userName, avatar, ...props}) => {
 
@@ -31,17 +30,17 @@ const HeaderContent = ({userName, avatar, ...props}) => {
                 <ProfileHeaderBadgeInfo/>
             </BadgeInfoArea>
             <BadgeInfoActions>
-                <BtnProfileAction
-                    caption={`touch me babe`} size={`medium`}
-                    handler={(e) => console.log('ok')}
-                />
+                {/*<BtnProfileAction*/}
+                {/*    caption={`touch me babe`} size={`medium`}*/}
+                {/*    handler={(e) => console.log('ok')}*/}
+                {/*/>*/}
             </BadgeInfoActions>
         </BadgeInfo>
 
         <HeaderSummary>
             <UserNameSpacer/>
             <ProfileSummary noexpand>
-                bam
+            {/*some summary text*/}
             </ProfileSummary>
         </HeaderSummary>
 

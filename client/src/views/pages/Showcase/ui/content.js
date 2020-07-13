@@ -1,5 +1,6 @@
 import styled, {css} from "styled-components";
-import {FullWidthBg} from "./index";
+import {Clear, FullWidthBg} from "./index";
+import React from "react";
 
 const Content = styled.div`
     position: relative;
@@ -37,7 +38,12 @@ const ContentHasBg = styled(Content)`
     margin-right: auto;
 `
 
-const ProfileContentInner = styled.div`
+const ProfileContentInner = styled(({className, children, ...props}) => {
+    return <div className={className} {...props}>
+        {children}
+        <Clear where={`both`}/>
+    </div>
+})`
     position: relative;
     
     ${FullWidthBg} & {

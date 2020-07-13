@@ -10,14 +10,27 @@ import {
     ScShowCaseSc,
     ScShowCaseSmallScSlot
 } from "../ui/leftcol";
-import {Clear} from "../ui";
 import React from "react";
 
-const LeftCol = ({images, ...props}) => {
+const LeftCol = ({type, link, ...props}) => {
+    const baseUrlComp = `/storage/images/comps/${link}`
+    let imgSecondaries = []
 
-    const secondaryNodes = images.secondaries.map((imageUrl, index) => (
+    switch (type) {
+        case `long`:
+            imgSecondaries = [`_ass2.gif`]
+            break
+        case `short`:
+            imgSecondaries = [`_ass2.gif`, `_ass3.gif`, `_ass4.gif`]
+            break
+        default:
+            imgSecondaries = []
+            break
+    }
+
+    const secondaryNodes = imgSecondaries.map((imageUrl, index) => (
         <ScShowCaseSmallScSlot key={index}>
-            <ScShowCaseSc src={imageUrl}/>
+            <ScShowCaseSc src={`${baseUrlComp}/${imageUrl}`}/>
         </ScShowCaseSmallScSlot>
     ))
 
@@ -30,7 +43,7 @@ const LeftCol = ({images, ...props}) => {
                 <ProfileCustomizationBlock>
                     <ScShowCase>
                         <ScShowCasePrimaryScSlot>
-                            <ScShowCaseSc src={images.primary}/>
+                            <ScShowCaseSc src={`${baseUrlComp}/_ass1.gif`}/>
                             {/*<ScShowcaseItemName desc={''} />*/}
                             {/*<ScShowcaseStats>*/}
                             {/*    <ScShowcaseStatsItem src={IconRate} count={0} />*/}
@@ -40,7 +53,6 @@ const LeftCol = ({images, ...props}) => {
                         <ScShowCaseRightCol>
                             {secondaryNodes}
                         </ScShowCaseRightCol>
-                        <Clear where={`both`}/>
                     </ScShowCase>
                 </ProfileCustomizationBlock>
 

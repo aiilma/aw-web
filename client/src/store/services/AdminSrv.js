@@ -3,7 +3,7 @@ import {AWSrv} from "./AWSrv";
 export class AdminSrv extends AWSrv {
     PREFIX = `/admin`
 
-    async uploadComp(data) {
+    uploadComp = async (data) => {
         const {typeVariant, bglink, title, price, uploads, ph} = data;
         const formData = new FormData();
 
