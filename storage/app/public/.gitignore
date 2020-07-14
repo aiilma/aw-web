@@ -3,4 +3,5 @@
 !icons/*
 !images*
 !images/**
+images/comps
 !.gitignore
